@@ -4,6 +4,7 @@ import {
     screen,
 } from '@testing-library/react';
 import Register from "@src/pages/register/index";
+import { RegistrationStepText } from "@src/components/RegistrationSteps/Stepper";
 
 describe("Register Page", () => {
     it("should render register component successfully", () => {
@@ -16,12 +17,12 @@ describe("Register Page", () => {
     it("should render steps navigation", () => {
         render(<Register />)
 
-        const accountDetailsNavigationComponent = screen.getByText("Account Details");
-        const userDetailsNavigationComponent = screen.getByText("User Details");
-        const contactDetailsNavigationComponent = screen.getByText("Contact Details");
+        const accountDetailsNavigationComponent = screen.getByText(RegistrationStepText.AccountDetails);
+        const userDetailsNavigationComponent = screen.getByText(RegistrationStepText.UserDetails);
+        const contactDetailsNavigationComponent = screen.getByText(RegistrationStepText.ContactDetails);
 
-        expect(accountDetailsNavigationComponent.innerHTML).toEqual("Account Details");
-        expect(userDetailsNavigationComponent.innerHTML).toEqual("User Details");
-        expect(contactDetailsNavigationComponent.innerHTML).toEqual("Contact Details");
+        expect(accountDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.AccountDetails);
+        expect(userDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.UserDetails);
+        expect(contactDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.ContactDetails);
     })
 });

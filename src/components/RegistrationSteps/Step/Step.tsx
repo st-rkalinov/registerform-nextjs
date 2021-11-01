@@ -1,9 +1,16 @@
-import React from 'react';
+import React from "react";
 
-const Step = () => {
+interface IProps {
+    text: string,
+    stepNumber: number,
+    inProgress: boolean,
+    valid: boolean,
+}
+
+const Step: React.FC<IProps> = (props) => {
     return (
         <div>
-          <p>Account Details</p>
+          <p>{ props.text }</p>
         </div>
     );
 };

@@ -1,11 +1,16 @@
 import React from 'react';
 
+export enum RegistrationStepText {
+    AccountDetails = "ACCOUNT DETAILS",
+    UserDetails = "USER DETAILS",
+    ContactDetails = "CONTACT DETAILS"
+}
 const Stepper = () => {
     return (
         <div>
-            <p>Account Details</p>
-            <p>User Details</p>
-            <p>Contact Details</p>
+            <p>{ RegistrationStepText.AccountDetails }</p>
+            <p>{ RegistrationStepText.UserDetails }</p>
+            <p>{ RegistrationStepText.ContactDetails }</p>
         </div>
     );
 };
