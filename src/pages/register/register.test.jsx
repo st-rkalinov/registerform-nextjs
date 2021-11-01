@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Home from '@src/pages/index';
+import {
+    render,
+    screen,
+} from '@testing-library/react';
 import Register from "@src/pages/register/index";
 
 describe("Register Page", () => {
@@ -10,4 +12,16 @@ describe("Register Page", () => {
 
         expect(registerHeading.innerHTML).toEqual("Register")
     });
+
+    it("should render steps navigation", () => {
+        render(<Register />)
+
+        const accountDetailsNavigationComponent = screen.getByText("Account Details");
+        const userDetailsNavigationComponent = screen.getByText("User Details");
+        const contactDetailsNavigationComponent = screen.getByText("Contact Details");
+
+        expect(accountDetailsNavigationComponent.innerHTML).toEqual("Account Details");
+        expect(userDetailsNavigationComponent.innerHTML).toEqual("User Details");
+        expect(contactDetailsNavigationComponent.innerHTML).toEqual("Contact Details");
+    })
 });
