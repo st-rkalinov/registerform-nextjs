@@ -10,7 +10,8 @@ interface IProps {
 const Step: React.FC<IProps> = (props) => {
     return (
         <div>
-          <p>{ props.text }</p>
+            <p>{props.text}</p>
+            <p>{props.stepNumber}</p>
         </div>
     );
 };

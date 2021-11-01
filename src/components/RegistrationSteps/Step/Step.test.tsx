@@ -19,4 +19,25 @@ describe("Registration step component", () => {
 
         expect(registerHeading.innerHTML).toEqual(text)
     });
+
+    it.each([
+        [RegistrationStepText.AccountDetails, 1, RegistrationStepText.AccountDetails],
+        [RegistrationStepText.UserDetails, 2, RegistrationStepText.UserDetails],
+        [RegistrationStepText.ContactDetails, 3, RegistrationStepText.ContactDetails]
+    ])("should render the step component with correct text and number", (text, number, result) => {
+        render(
+            <Step
+                text={text}
+                inProgress
+                stepNumber={number}
+                valid={false}
+            />
+        )
+
+        const stepText = screen.getByText(text);
+        const stepNumber = screen.getByText(number);
+
+        expect(stepText.innerHTML).toEqual(text);
+        expect(stepNumber.innerHTML).toEqual(number.toString());
+    })
 });
