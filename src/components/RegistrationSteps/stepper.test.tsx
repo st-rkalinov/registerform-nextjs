@@ -1,12 +1,17 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import Register from "@src/pages/register/index";
+import { render, screen } from '@testing-library/react';
+import Stepper from '@src/components/RegistrationSteps/Stepper';
 
-describe("Register Page", () => {
-    it("should render register component successfully", () => {
-        const { getByRole } = render(<Register />)
-        const registerHeading = getByRole("heading", { level: 1});
+describe("Registration Stepper navigation", () => {
+    it("should render all steps", () => {
+        render(<Stepper />)
 
-        expect(registerHeading.innerHTML).toEqual("Register")
-    });
+        const accountDetailsNavigationComponent = screen.getByText("Account Details");
+        const userDetailsNavigationComponent = screen.getByText("User Details");
+        const contactDetailsNavigationComponent = screen.getByText("Contact Details");
+
+        expect(accountDetailsNavigationComponent.innerHTML).toEqual("Account Details");
+        expect(userDetailsNavigationComponent.innerHTML).toEqual("User Details");
+        expect(contactDetailsNavigationComponent.innerHTML).toEqual("Contact Details");
+    })
 });
