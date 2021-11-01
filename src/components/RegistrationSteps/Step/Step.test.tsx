@@ -37,7 +37,7 @@ describe("Registration step component", () => {
 
         expect(stepText.innerHTML).toEqual(text);
         expect(stepNumber.innerHTML).toEqual(number.toString());
-    })
+    });
 
     it.each([
         [RegistrationStepStatus.inProgress, "bg-gray-900"],
@@ -56,5 +56,24 @@ describe("Registration step component", () => {
         const stepNumberContainer = screen.getByText(1);
 
         expect(stepNumberContainer).toHaveClass(backgroundClass);
-    })
+    });
+
+    it.each([
+        [RegistrationStepStatus.inProgress, "text-gray-900"],
+        [RegistrationStepStatus.disabled, "text-gray-300"],
+        [RegistrationStepStatus.valid, "text-gray-900"],
+        [RegistrationStepStatus.invalid, "text-gray-900"],
+    ])("should render the step component with correct css for the text color- (status: %s -> cssClass: %s)", (status, backgroundClass) => {
+        render(
+            <Step
+                text={RegistrationStepText.AccountDetails}
+                status={status}
+                stepNumber={1}
+            />
+        )
+
+        const stepTextContainer = screen.getByText(RegistrationStepText.AccountDetails);
+
+        expect(stepTextContainer).toHaveClass(backgroundClass);
+    });
 });
