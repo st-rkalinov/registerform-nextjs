@@ -21,10 +21,10 @@ describe("Registration step component", () => {
     });
 
     it.each([
-        [RegistrationStepText.AccountDetails, 1, RegistrationStepText.AccountDetails],
-        [RegistrationStepText.UserDetails, 2, RegistrationStepText.UserDetails],
-        [RegistrationStepText.ContactDetails, 3, RegistrationStepText.ContactDetails]
-    ])("should render the step component with correct text and number", (text, number, result) => {
+        [RegistrationStepText.AccountDetails, 1],
+        [RegistrationStepText.UserDetails, 2],
+        [RegistrationStepText.ContactDetails, 3]
+    ])("should render the step component with correct text and number - (text: %s -> number: %s)", (text, number) => {
         render(
             <Step
                 text={text}

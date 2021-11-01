@@ -1,4 +1,5 @@
 import React from 'react';
+import Step from '@src/components/RegistrationSteps/Step/Step';
 
 export enum RegistrationStepText {
     AccountDetails = "ACCOUNT DETAILS",
@@ -7,10 +8,10 @@ export enum RegistrationStepText {
 }
 const Stepper = () => {
     return (
-        <div>
-            <p>{ RegistrationStepText.AccountDetails }</p>
-            <p>{ RegistrationStepText.UserDetails }</p>
-            <p>{ RegistrationStepText.ContactDetails }</p>
+        <div className="flex justify-center items-center">
+            <Step text={RegistrationStepText.AccountDetails} stepNumber={1} inProgress valid={true} />
+            <Step text={RegistrationStepText.UserDetails} stepNumber={2} inProgress valid={true} />
+            <Step text={RegistrationStepText.ContactDetails} stepNumber={3} inProgress valid={true} />
         </div>
     );
 };
