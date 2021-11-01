@@ -1,10 +1,16 @@
 import React from "react";
 
+export enum RegistrationStepStatus {
+    valid = 'valid',
+    invalid = 'invalid',
+    inProgress = 'inProgress',
+    disabled = 'disabled',
+}
+
 interface IProps {
     text: string,
     stepNumber: number,
-    inProgress: boolean,
-    valid: boolean,
+    status: RegistrationStepStatus
 }
 
 const Step: React.FC<IProps> = (props) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, } from '@testing-library/react';
-import Step from '@src/components/RegistrationSteps/Step/Step';
+import Step, { RegistrationStepStatus } from '@src/components/RegistrationSteps/Step/Step';
 import { RegistrationStepText } from '@src/components/RegistrationSteps/Stepper';
 
 describe("Registration step component", () => {
@@ -10,9 +10,8 @@ describe("Registration step component", () => {
         render(
             <Step
                 text={text}
-                inProgress
                 stepNumber={1}
-                valid={false}
+                status={RegistrationStepStatus.inProgress}
             />
         )
         const registerHeading = screen.getByText(text);
@@ -28,9 +27,8 @@ describe("Registration step component", () => {
         render(
             <Step
                 text={text}
-                inProgress
+                status={RegistrationStepStatus.inProgress}
                 stepNumber={number}
-                valid={false}
             />
         )
 
