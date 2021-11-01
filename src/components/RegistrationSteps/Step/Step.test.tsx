@@ -38,4 +38,23 @@ describe("Registration step component", () => {
         expect(stepText.innerHTML).toEqual(text);
         expect(stepNumber.innerHTML).toEqual(number.toString());
     })
+
+    it.each([
+        [RegistrationStepStatus.inProgress, "bg-gray-900"],
+        [RegistrationStepStatus.disabled, "bg-gray-300"],
+        [RegistrationStepStatus.valid, "bg-gray-200"],
+        [RegistrationStepStatus.invalid, "bg-red-200"],
+    ])("should render the step component with correct status background class - (status: %s -> cssClass: %s)", (status, backgroundClass) => {
+        render(
+            <Step
+                text={RegistrationStepText.AccountDetails}
+                status={status}
+                stepNumber={1}
+            />
+        )
+
+        const stepNumberContainer = screen.getByText(1);
+
+        expect(stepNumberContainer).toHaveClass(backgroundClass);
+    })
 });

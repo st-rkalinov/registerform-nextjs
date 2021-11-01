@@ -17,12 +17,12 @@ const Stepper = () => {
             <Step
                 text={RegistrationStepText.UserDetails}
                 stepNumber={2}
-                status={RegistrationStepStatus.inProgress}
+                status={RegistrationStepStatus.disabled}
             />
             <Step
                 text={RegistrationStepText.ContactDetails}
                 stepNumber={3}
-                status={RegistrationStepStatus.inProgress}
+                status={RegistrationStepStatus.valid}
             />
         </div>
     );
