@@ -6,7 +6,7 @@ import '@src/styles/tailwind.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
-        <div className="bg-gradient-to-b from-blue-100 h-screen">
+        <div className="bg-gradient-to-b from-blue-100 h-screen p-6">
             <Component {...pageProps} />
         </div>
     );
