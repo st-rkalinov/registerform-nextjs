@@ -95,4 +95,21 @@ describe("Registration step component", () => {
 
         expect(stepTextContainer).toHaveClass(textColorClass);
     });
+
+    it.each([
+        [RegistrationStepStatus.valid, "badge-success"],
+        [RegistrationStepStatus.invalid, "badge-error"],
+    ])("should render the step component with correct badge", (status, badgeTestId) => {
+        render(
+            <Step
+                text={RegistrationStepText.AccountDetails}
+                status={status}
+                stepNumber={1}
+            />,
+        );
+
+        const stepTextContainer = screen.getByTestId(badgeTestId);
+
+        expect(stepTextContainer).toBeInTheDocument();
+    });
 });
