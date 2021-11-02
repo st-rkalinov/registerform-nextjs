@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Badge, { BadgeType } from "@src/components/Badge";
+import Badge, { BadgeType } from "@src/components/Badge/Badge";
 
 describe("Badge component", () => {
     it("should render the badge component", () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Badge, { BadgeType } from "@src/components/Badge";
+import Badge, { BadgeType } from "@src/components/Badge/Badge";
 
 export enum RegistrationStepStatus {
     valid = "valid",
@@ -69,7 +69,7 @@ const Step: React.FC<IProps> = ({
     const badge = getStepBadgeComponent(status);
 
     return (
-        <div className="flex-col justify-center items-center w-24">
+        <div className="flex-col justify-center items-center w-24" key={status}>
             <div
                 className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto relative ${backgroundCssColor} ${stepNumberCssColor}`}
             >

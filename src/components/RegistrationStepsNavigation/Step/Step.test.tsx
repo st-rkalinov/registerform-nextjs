@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
-import { RegistrationStepText } from "@src/components/RegistrationStepsNavigation/Stepper";
+import { RegistrationStepText } from "@src/pages";
 
 describe("Registration step component", () => {
     it("should render register step component successfully", () => {
