@@ -2,6 +2,7 @@ import React from "react";
 import Stepper from "@src/components/Stepper/Stepper";
 import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
+import Input, { InputType } from "@src/components/Input/Input";
 
 const Register = () => {
     const stepComponents = [
@@ -28,6 +29,12 @@ const Register = () => {
                 <h1 className="font-extrabold text-3xl">Register</h1>
             </div>
             <Stepper components={stepComponents} />
+            <Input label="Username" type={InputType.text} name="username" id="email" value="" />
+            <Input label="Email" type={InputType.email} name="email" id="username" value="" />
+            <Input label="Password" type={InputType.password} name="password" id="password" value="" />
+            <Input label="Male" type={InputType.radio} name="gender" id="gender1" value="Male" />
+            <Input label="Female" type={InputType.radio} name="gender" id="gender2" value="Female" />
+            <Input label="Some long checkbox label" type={InputType.checkbox} name="gender" id="gender2" value="Female" />
         </div>
     );
 };
