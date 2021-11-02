@@ -1,4 +1,5 @@
 import React from "react";
+import Badge, { BadgeType } from "@src/components/Badge";
 
 export enum RegistrationStepStatus {
     valid = 'valid',
@@ -46,15 +47,28 @@ const getStepNumberTextCssColorClass = (status: RegistrationStepStatus) => {
     }
 };
 
+const getStepBadgeComponent = (status: RegistrationStepStatus) => {
+    switch (status) {
+        case RegistrationStepStatus.valid:
+            return <Badge badgeType={BadgeType.success} />;
+        case RegistrationStepStatus.invalid:
+            return <Badge badgeType={BadgeType.error} />;
+        default:
+            return null;
+    }
+};
+
 const Step: React.FC<IProps> = (props) => {
     const backgroundCssColor = getBackgroundCssColor(props.status);
     const textCssColor = props.status === RegistrationStepStatus.disabled ? "text-gray-300" : "text-gray-900";
     const stepNumberCssColor = getStepNumberTextCssColorClass(props.status);
+    const badge = getStepBadgeComponent(props.status);
 
     return (
         <div className="flex-col justify-center items-center w-24">
-            <div className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto ${backgroundCssColor} ${stepNumberCssColor}`}>
+            <div className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto relative ${backgroundCssColor} ${stepNumberCssColor}`}>
                 {props.stepNumber}
+                { badge }
             </div>
             <p className={`text-center break-words font-semibold text-sm p-2 ${textCssColor}`}>{props.text}</p>
         </div>

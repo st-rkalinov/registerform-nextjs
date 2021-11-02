@@ -1,5 +1,5 @@
-import React from 'react';
-import Step, { RegistrationStepStatus } from '@src/components/RegistrationStepsNavigation/Step/Step';
+import React from "react";
+import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
 
 export enum RegistrationStepText {
     AccountDetails = "ACCOUNT DETAILS",
@@ -19,13 +19,13 @@ const Stepper = () => {
             <Step
                 text={RegistrationStepText.UserDetails}
                 stepNumber={2}
-                status={RegistrationStepStatus.disabled}
+                status={RegistrationStepStatus.invalid}
             />
             <div className="w-20 border-t-2 border-gray-300 self-baseline mt-6" />
             <Step
                 text={RegistrationStepText.ContactDetails}
                 stepNumber={3}
-                status={RegistrationStepStatus.invalid}
+                status={RegistrationStepStatus.valid}
             />
         </div>
     );
