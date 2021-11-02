@@ -44,7 +44,7 @@ describe("Registration step component", () => {
         [RegistrationStepStatus.disabled, "bg-gray-300"],
         [RegistrationStepStatus.valid, "bg-gray-200"],
         [RegistrationStepStatus.invalid, "bg-red-200"],
-    ])("should render the step component with correct status background class - (status: %s -> cssClass: %s)", (status, backgroundClass) => {
+    ])("should render the step component with correct status background class - (status: %s -> cssClass: %s)", (status, backgroundColorClass) => {
         render(
             <Step
                 text={RegistrationStepText.AccountDetails}
@@ -55,7 +55,7 @@ describe("Registration step component", () => {
 
         const stepNumberContainer = screen.getByText(1);
 
-        expect(stepNumberContainer).toHaveClass(backgroundClass);
+        expect(stepNumberContainer).toHaveClass(backgroundColorClass);
     });
 
     it.each([
@@ -63,7 +63,7 @@ describe("Registration step component", () => {
         [RegistrationStepStatus.disabled, "text-gray-300"],
         [RegistrationStepStatus.valid, "text-gray-900"],
         [RegistrationStepStatus.invalid, "text-gray-900"],
-    ])("should render the step component with correct css for the text color- (status: %s -> cssClass: %s)", (status, backgroundClass) => {
+    ])("should render the step component with correct css for the text color- (status: %s -> cssClass: %s)", (status, textColorClass) => {
         render(
             <Step
                 text={RegistrationStepText.AccountDetails}
@@ -74,6 +74,25 @@ describe("Registration step component", () => {
 
         const stepTextContainer = screen.getByText(RegistrationStepText.AccountDetails);
 
-        expect(stepTextContainer).toHaveClass(backgroundClass);
+        expect(stepTextContainer).toHaveClass(textColorClass);
+    });
+
+    it.each([
+        [RegistrationStepStatus.inProgress, "text-white"],
+        [RegistrationStepStatus.disabled, "text-gray-400"],
+        [RegistrationStepStatus.valid, "text-gray-900"],
+        [RegistrationStepStatus.invalid, "text-gray-900"],
+    ])("should render the step component with correct css class for the color of the number step - (status: %s -> cssClass: %s)", (status, textColorClass) => {
+        render(
+            <Step
+                text={RegistrationStepText.AccountDetails}
+                status={status}
+                stepNumber={1}
+            />
+        )
+
+        const stepTextContainer = screen.getByText(1);
+
+        expect(stepTextContainer).toHaveClass(textColorClass);
     });
 });
