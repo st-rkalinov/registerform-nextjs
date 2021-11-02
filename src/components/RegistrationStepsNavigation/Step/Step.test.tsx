@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen, } from '@testing-library/react';
-import Step, { RegistrationStepStatus } from '@src/components/RegistrationStepsNavigation/Step/Step';
-import { RegistrationStepText } from '@src/components/RegistrationStepsNavigation/Stepper';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
+import { RegistrationStepText } from "@src/components/RegistrationStepsNavigation/Stepper";
 
 describe("Registration step component", () => {
     it("should render register step component successfully", () => {
@@ -12,25 +12,25 @@ describe("Registration step component", () => {
                 text={text}
                 stepNumber={1}
                 status={RegistrationStepStatus.inProgress}
-            />
-        )
+            />,
+        );
         const registerHeading = screen.getByText(text);
 
-        expect(registerHeading.innerHTML).toEqual(text)
+        expect(registerHeading.innerHTML).toEqual(text);
     });
 
     it.each([
         [RegistrationStepText.AccountDetails, 1],
         [RegistrationStepText.UserDetails, 2],
-        [RegistrationStepText.ContactDetails, 3]
+        [RegistrationStepText.ContactDetails, 3],
     ])("should render the step component with correct text and number - (text: %s -> number: %s)", (text, number) => {
         render(
             <Step
                 text={text}
                 status={RegistrationStepStatus.inProgress}
                 stepNumber={number}
-            />
-        )
+            />,
+        );
 
         const stepText = screen.getByText(text);
         const stepNumber = screen.getByText(number);
@@ -50,8 +50,8 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
-            />
-        )
+            />,
+        );
 
         const stepNumberContainer = screen.getByText(1);
 
@@ -69,8 +69,8 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
-            />
-        )
+            />,
+        );
 
         const stepTextContainer = screen.getByText(RegistrationStepText.AccountDetails);
 
@@ -88,8 +88,8 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
-            />
-        )
+            />,
+        );
 
         const stepTextContainer = screen.getByText(1);
 

@@ -1,12 +1,9 @@
-import React from 'react'
-import { NextPage } from 'next'
-import { JSX } from '@babel/types';
-import Register from '@src/pages/register';
+import React from "react";
+import { JSX } from "@babel/types";
+import Register from "@src/pages/register";
 
-const Home: () => JSX.Element = () => {
-  return (
+const Home: () => JSX.Element = () => (
     <Register />
-  )
-}
+);
 
-export default Home
+export default Home;

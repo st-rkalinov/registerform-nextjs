@@ -2,10 +2,10 @@ import React from "react";
 import Badge, { BadgeType } from "@src/components/Badge";
 
 export enum RegistrationStepStatus {
-    valid = 'valid',
-    invalid = 'invalid',
-    inProgress = 'inProgress',
-    disabled = 'disabled',
+    valid = "valid",
+    invalid = "invalid",
+    inProgress = "inProgress",
+    disabled = "disabled",
 }
 
 interface IProps {
@@ -58,19 +58,25 @@ const getStepBadgeComponent = (status: RegistrationStepStatus) => {
     }
 };
 
-const Step: React.FC<IProps> = (props) => {
-    const backgroundCssColor = getBackgroundCssColor(props.status);
-    const textCssColor = props.status === RegistrationStepStatus.disabled ? "text-gray-300" : "text-gray-900";
-    const stepNumberCssColor = getStepNumberTextCssColorClass(props.status);
-    const badge = getStepBadgeComponent(props.status);
+const Step: React.FC<IProps> = ({
+    status,
+    stepNumber,
+    text,
+}) => {
+    const backgroundCssColor = getBackgroundCssColor(status);
+    const textCssColor = status === RegistrationStepStatus.disabled ? "text-gray-300" : "text-gray-900";
+    const stepNumberCssColor = getStepNumberTextCssColorClass(status);
+    const badge = getStepBadgeComponent(status);
 
     return (
         <div className="flex-col justify-center items-center w-24">
-            <div className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto relative ${backgroundCssColor} ${stepNumberCssColor}`}>
-                {props.stepNumber}
-                { badge }
+            <div
+                className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto relative ${backgroundCssColor} ${stepNumberCssColor}`}
+            >
+                {stepNumber}
+                {badge}
             </div>
-            <p className={`text-center break-words font-semibold text-sm p-2 ${textCssColor}`}>{props.text}</p>
+            <p className={`text-center break-words font-semibold text-sm p-2 ${textCssColor}`}>{text}</p>
         </div>
     );
 };

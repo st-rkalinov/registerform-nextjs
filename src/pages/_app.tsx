@@ -1,15 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-import { AppProps } from 'next/app'
+import React from "react";
+import { AppProps } from "next/app";
 
-import '@src/styles/tailwind.css'
+import "@src/styles/tailwind.css";
 
-const App = ({ Component, pageProps }: AppProps) => {
-    return (
-        <div className="bg-gradient-to-b from-blue-100 h-screen p-6">
-            <Component {...pageProps} />
-        </div>
-    );
-}
+const App = ({ Component, pageProps }: AppProps) => (
+    <div className="bg-gradient-to-b from-blue-100 h-screen p-6">
+        <Component {...pageProps} />
+    </div>
+);
 
-export default App
+export default App;

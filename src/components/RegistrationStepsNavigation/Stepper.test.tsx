@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Stepper, { RegistrationStepText } from '@src/components/RegistrationStepsNavigation/Stepper';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import Stepper, { RegistrationStepText } from "@src/components/RegistrationStepsNavigation/Stepper";
 
 describe("Registration Stepper navigation", () => {
     it("should render all steps", () => {
-        render(<Stepper />)
+        render(<Stepper />);
 
         const accountDetailsNavigationComponent = screen.getByText(RegistrationStepText.AccountDetails);
         const userDetailsNavigationComponent = screen.getByText(RegistrationStepText.UserDetails);
@@ -13,5 +13,5 @@ describe("Registration Stepper navigation", () => {
         expect(accountDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.AccountDetails);
         expect(userDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.UserDetails);
         expect(contactDetailsNavigationComponent.innerHTML).toEqual(RegistrationStepText.ContactDetails);
-    })
+    });
 });
