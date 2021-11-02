@@ -4,7 +4,7 @@ import {
     screen,
 } from '@testing-library/react';
 import Register from "@src/pages/register/index";
-import { RegistrationStepText } from "@src/components/RegistrationSteps/Stepper";
+import { RegistrationStepText } from "@src/components/RegistrationStepsNavigation/Stepper";
 
 describe("Register Page", () => {
     it("should render register component successfully", () => {

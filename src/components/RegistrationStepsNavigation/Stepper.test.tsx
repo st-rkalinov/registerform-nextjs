@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Stepper, { RegistrationStepText } from '@src/components/RegistrationSteps/Stepper';
+import Stepper, { RegistrationStepText } from '@src/components/RegistrationStepsNavigation/Stepper';
 
 describe("Registration Stepper navigation", () => {
     it("should render all steps", () => {
