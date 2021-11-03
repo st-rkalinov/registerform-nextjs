@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-    IForbiddenValues,
-    IInputRule,
-    IMaxRule,
-    IMinRule,
-    IRequiredRule,
-} from "@src/interfaces/InputRuleInteface";
+import { IInputRule, } from "@src/interfaces/InputRuleInteface";
 import { InputValidator } from "@src/classes/InputValidator";
 
 export enum InputType {
@@ -22,7 +16,7 @@ interface IProps {
     name: string,
     id: string,
     value: string,
-    rules: (IInputRule | IMinRule | IMaxRule | IForbiddenValues | IRequiredRule)[],
+    rules: IInputRule[],
 }
 
 const Input: React.FC<IProps> = ({

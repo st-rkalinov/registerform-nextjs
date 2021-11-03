@@ -6,24 +6,26 @@ export enum InputRule {
     custom = "custom",
 }
 
-export interface IInputRule {
+export interface IBasicInputRule {
     name: InputRule;
     message: string;
     validator?: () => boolean;
 }
 
-export interface IMinRule extends IInputRule {
-    min: number
+export interface IMinRule extends IBasicInputRule {
+    min?: number
 }
 
-export interface IMaxRule extends IInputRule {
-    max: number;
+export interface IMaxRule extends IBasicInputRule {
+    max?: number;
 }
 
-export interface IForbiddenValues extends IInputRule {
-    forbiddenValues: string | string[];
+export interface IForbiddenValues extends IBasicInputRule {
+    forbiddenValues?: string | string[];
 }
 
-export interface IRequiredRule extends IInputRule {
-    required: boolean;
+export interface IRequiredRule extends IBasicInputRule {
+    required?: boolean;
 }
+
+export interface IInputRule extends IBasicInputRule, IMinRule, IMaxRule, IForbiddenValues, IRequiredRule {}

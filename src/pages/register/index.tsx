@@ -46,6 +46,11 @@ const Register = () => {
                         message: `The min length is ${5}`,
                         min: 5,
                     },
+                    {
+                        name: InputRule.max,
+                        message: `The max length is ${10}`,
+                        max: 10,
+                    },
                 ]}
             />
             {/*<Input label="Email" type={InputType.email} name="email" id="username" value="" />

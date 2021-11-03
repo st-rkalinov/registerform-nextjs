@@ -1,4 +1,5 @@
 import {
+    IBasicInputRule,
     IForbiddenValues,
     IInputRule,
     IMaxRule,
@@ -8,7 +9,7 @@ import {
 } from "@src/interfaces/InputRuleInteface";
 
 export class InputValidator {
-    static validate(rule: (IMaxRule | IMinRule | IRequiredRule | IForbiddenValues | IInputRule), value: string, customValidateHandler?: Function) {
+    static validate(rule: IInputRule, value: string, customValidateHandler?: Function) {
         switch (rule.name) {
             case InputRule.required:
                 return this.requiredValidationRule(value);
@@ -19,28 +20,53 @@ export class InputValidator {
 
                 return false;
             }
+            case InputRule.max: {
+                if ("max" in rule) {
+                    return this.maxValidationRule(rule.max, value);
+                }
+
+                return false;
+            }
             default:
                 return false;
         }
     }
 
-    static getValidationErrorMessage(rule: (IMaxRule | IMinRule | IRequiredRule | IForbiddenValues | IInputRule)) {
+    static getValidationErrorMessage(rule: (IMaxRule | IMinRule | IRequiredRule | IForbiddenValues | IBasicInputRule)) {
         return rule.message;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     static requiredValidationRule(value: string) {
         return value !== "";
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    static minValidationRule(minValue: number, inputValue: string | number) {
-        if (!Number.isNaN(+inputValue)) {
+    static minValidationRule(minValue: number | undefined, inputValue: string | number) {
+        if (!minValue) {
+            return false;
+        }
+
+        if (!Number.isNaN(+inputValue) && minValue) {
             return inputValue >= minValue;
         }
 
         if (typeof inputValue === "string") {
             return inputValue.length >= minValue;
+        }
+
+        return false;
+    }
+
+    static maxValidationRule(maxValue: number | undefined, inputValue: string | number) {
+        if (!maxValue) {
+            return false;
+        }
+
+        if (!Number.isNaN(+inputValue) && maxValue) {
+            return inputValue <= maxValue;
+        }
+
+        if (typeof inputValue === "string") {
+            return inputValue.length <= maxValue;
         }
 
         return false;
