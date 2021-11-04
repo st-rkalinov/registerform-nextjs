@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IInputRule } from "@src/interfaces/InputRuleInteface";
-import useValidation from "@src/hooks/useValidation";
-import useIsTouched from "@src/hooks/useIsTouched";
+import useValidation from "@src/hooks/useValidation/useValidation";
+import useIsTouched from "@src/hooks/useIsTouched/useIsTouched";
 
 export enum InputType {
     text = "text",
@@ -29,8 +29,8 @@ const Input: React.FC<IProps> = ({
     rules,
 }) => {
     const [inputValue, setInputValue] = useState<string>(value || "");
-    const [isTouched, setIsTouched] = useIsTouched();
-    const [errors, checkForErrors] = useValidation(rules);
+    const { isTouched, setIsTouched } = useIsTouched();
+    const { errors, checkForErrors } = useValidation(rules);
 
     return (
         <div data-testid="input-container">

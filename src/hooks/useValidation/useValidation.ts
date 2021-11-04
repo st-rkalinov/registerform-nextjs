@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { IInputRule, InputRule } from "@src/interfaces/InputRuleInteface";
 
-const useValidation = (rules: IInputRule[]): [string[], (inputValue: string) => void] => {
+interface IUseValidation {
+    errors: string[],
+    checkForErrors: (inputValue: string) => void,
+}
+
+const useValidation = (rules: IInputRule[]): IUseValidation => {
     const [errors, setErrors] = useState<string[]>([]);
 
     const getValidationErrorMessage = (rule: IInputRule) => rule.message;
@@ -71,8 +76,7 @@ const useValidation = (rules: IInputRule[]): [string[], (inputValue: string) => 
             return;
         }
         rules.forEach((rule) => {
-            const v = isValid(rule, inputValue);
-            if (!v) {
+            if (!isValid(rule, inputValue)) {
                 inputErrors.push(getValidationErrorMessage(rule));
             }
         });
@@ -80,7 +84,7 @@ const useValidation = (rules: IInputRule[]): [string[], (inputValue: string) => 
         setErrors(inputErrors);
     };
 
-    return [errors, checkForErrors];
+    return { errors, checkForErrors };
 };
 
 export default useValidation;
