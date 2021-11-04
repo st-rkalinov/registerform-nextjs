@@ -3,7 +3,7 @@ import Stepper from "@src/components/Stepper/Stepper";
 import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
 import Input, { InputType } from "@src/components/Input/Input";
-import { InputRule } from "@src/interfaces/InputRuleInteface";
+import { maxRule, minRule, requiredRule } from "@src/utils/InputRulesUtils";
 
 const Register = () => {
     const stepComponents = [
@@ -36,22 +36,7 @@ const Register = () => {
                 name="username"
                 id="email"
                 value=""
-                rules={[
-                    {
-                        name: InputRule.required,
-                        message: "The field is required",
-                    },
-                    {
-                        name: InputRule.min,
-                        message: `The min length is ${5}`,
-                        min: 5,
-                    },
-                    {
-                        name: InputRule.max,
-                        message: `The max length is ${10}`,
-                        max: 10,
-                    },
-                ]}
+                rules={[requiredRule(), minRule(5), maxRule(10)]}
             />
             {/*<Input label="Email" type={InputType.email} name="email" id="username" value="" />
             <Input label="Password" type={InputType.password} name="password" id="password" value="" />

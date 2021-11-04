@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+    maxRuleValidator,
+    minRuleValidator,
+    requiredRuleValidator
+} from "@src/utils/InputRulesUtils";
 import { IInputRule, InputRule } from "@src/interfaces/InputRuleInteface";
 
 interface IUseValidation {
@@ -9,60 +14,18 @@ interface IUseValidation {
 const useValidation = (rules: IInputRule[]): IUseValidation => {
     const [errors, setErrors] = useState<string[]>([]);
 
-    const getValidationErrorMessage = (rule: IInputRule) => rule.message;
+    const getValidationErrorMessage = (rule: IInputRule) => rule?.message || rule.defaultMessage;
 
-    const requiredValidationRule = (value: string) => value !== "";
-
-    const minValidationRule = (minValue: number | undefined, inputValue: string | number) => {
-        if (!minValue) {
-            return false;
-        }
-
-        if (!Number.isNaN(+inputValue) && minValue) {
-            return inputValue >= minValue;
-        }
-
-        if (typeof inputValue === "string") {
-            return inputValue.length >= minValue;
-        }
-
-        return false;
-    };
-
-    const maxValidationRule = (maxValue: number | undefined, inputValue: string | number) => {
-        if (!maxValue) {
-            return false;
-        }
-
-        if (!Number.isNaN(+inputValue) && maxValue) {
-            return inputValue <= maxValue;
-        }
-
-        if (typeof inputValue === "string") {
-            return inputValue.length <= maxValue;
-        }
-
-        return false;
-    };
-
-    const isValid = (rule: IInputRule, value: string, customValidateHandler?: Function) => {
+    const isValid = (rule: IInputRule, value: string) => {
         switch (rule.name) {
             case InputRule.required: {
-                return requiredValidationRule(value);
+                return requiredRuleValidator(value);
             }
             case InputRule.min: {
-                if ("min" in rule) {
-                    return minValidationRule(rule.min, value);
-                }
-
-                return false;
+                return minRuleValidator(rule?.min, value);
             }
             case InputRule.max: {
-                if ("max" in rule) {
-                    return maxValidationRule(rule.max, value);
-                }
-
-                return false;
+                return maxRuleValidator(rule?.max, value);
             }
             default:
                 return false;

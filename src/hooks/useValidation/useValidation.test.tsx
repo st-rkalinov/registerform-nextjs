@@ -1,25 +1,10 @@
-import { InputRule } from "@src/interfaces/InputRuleInteface";
 import useValidation from "@src/hooks/useValidation/useValidation";
 import { act, renderHook } from "@testing-library/react-hooks";
-
-const requiredRuleMock = {
-    name: InputRule.required,
-    message: "The field is required",
-};
-const minRuleMock = {
-    name: InputRule.min,
-    message: "The field min length is",
-    min: 5,
-};
-const maxRuleMock = {
-    name: InputRule.max,
-    message: "The field min length is",
-    max: 10,
-};
+import { maxRule, minRule, requiredRule } from "@src/utils/InputRulesUtils";
 
 describe("useValidation Hook", () => {
     it("should return proper types and values on the initial call of the hook", () => {
-        const { result } = renderHook(() => useValidation([requiredRuleMock, maxRuleMock, minRuleMock]));
+        const { result } = renderHook(() => useValidation([requiredRule(), maxRule(10), minRule(5)]));
 
         expect(result.current.errors).toBeInstanceOf(Array);
         expect(result.current.errors.length).toEqual(0);
@@ -27,21 +12,24 @@ describe("useValidation Hook", () => {
     });
 
     it("should return proper values if the state of the hooks changes", () => {
-        const { result } = renderHook(() => useValidation([requiredRuleMock, minRuleMock]));
+        const { result } = renderHook(() => useValidation([requiredRule(), minRule(5)]));
 
         act(() => result.current.checkForErrors(""));
         expect(result.current.errors).toBeInstanceOf(Array);
         expect(result.current.errors.length).toEqual(2);
-        expect(result.current.errors).toEqual(expect.arrayContaining([requiredRuleMock.message, minRuleMock.message]));
+        expect(result.current.errors).toEqual(expect.arrayContaining([requiredRule().defaultMessage, minRule(5).defaultMessage]));
 
-        act(() => result.current.checkForErrors("asd"));
+        act(() => result.current.checkForErrors("4"));
         expect(result.current.errors).toBeInstanceOf(Array);
         expect(result.current.errors.length).toEqual(1);
-        expect(result.current.errors).toEqual(expect.arrayContaining([minRuleMock.message]));
+        expect(result.current.errors).toEqual(expect.arrayContaining([minRule(5).defaultMessage]));
 
-
-        act(() => result.current.checkForErrors("asddd"));
+        act(() => result.current.checkForErrors("5"));
         expect(result.current.errors).toBeInstanceOf(Array);
         expect(result.current.errors.length).toEqual(0);
+    });
+
+    it("should throw error if min OR max rule is used but the passed value is is NaN", () => {
+        const { result } = renderHook(() => useValidation([requiredRule(), minRule(5)]));
     });
 });

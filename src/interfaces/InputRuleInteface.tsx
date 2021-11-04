@@ -2,30 +2,62 @@ export enum InputRule {
     required = "required",
     max = "max",
     min = "min",
+    minLen = "minLen",
+    maxLen = "maxLen",
     forbiddenValues = "forbiddenValues",
-    custom = "custom",
+    noSpecialChars = "noSpecialChars",
+    onlyLetters = "onlyLetters",
+    no_N_charactersNextToEachOther = "no_N_charactersNextToEachOther",
+    date = "date",
 }
 
 export interface IBasicInputRule {
     name: InputRule;
-    message: string;
+    defaultMessage: string,
+    message?: string | undefined;
     validator?: () => boolean;
 }
 
 export interface IMinRule extends IBasicInputRule {
-    min?: number
+    min: number
 }
 
 export interface IMaxRule extends IBasicInputRule {
-    max?: number;
+    max: number;
+}
+
+export interface IMinLenRule extends IBasicInputRule {
+    minLen: number
+}
+
+export interface IMaxLenRule extends IBasicInputRule {
+    maxLen: number;
 }
 
 export interface IForbiddenValues extends IBasicInputRule {
-    forbiddenValues?: string | string[];
+    forbiddenValues: string[];
 }
 
 export interface IRequiredRule extends IBasicInputRule {
-    required?: boolean;
+    required: boolean;
 }
 
-export interface IInputRule extends IBasicInputRule, IMinRule, IMaxRule, IForbiddenValues, IRequiredRule {}
+export interface INoSpecialCharsRule extends IBasicInputRule {
+    noSpecialChars: string;
+}
+
+export interface IOnlyLetter extends IBasicInputRule {
+    onlyLetters: boolean;
+}
+
+export interface INoNCharsNextToEachOther extends IBasicInputRule {
+    charsCount: number
+    chars: string[];
+}
+
+export type IInputRule = IMinRule | IBasicInputRule | IMaxRule | IForbiddenValues | IRequiredRule
+| IMaxLenRule
+| IMinLenRule
+| INoNCharsNextToEachOther
+| INoSpecialCharsRule
+| IOnlyLetter;

@@ -2,7 +2,29 @@ import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import Input, { InputType } from "@src/components/Input/Input";
 import userEvent from "@testing-library/user-event";
-import { InputRule } from "@src/interfaces/InputRuleInteface";
+import { maxRule, minRule, requiredRule, specialCharactersList, } from "@src/utils/InputRulesUtils";
+
+const customMessagesForTests = {
+    required: "custom req msg",
+    min: "custom min msg",
+    max: "custom max msg",
+    minLen: "custom minLen msg",
+    maxLen: "custom maxLen msg",
+    forbiddenValues: "custom forbidden values msg",
+    noSpecialChars: "custom noSpecialChars msg",
+    onlyLetters: "custom onlyLetters msg",
+    noNchars: "custom noNChars msg",
+};
+
+const rulesValuesForTests = {
+    min: 5,
+    max: 10,
+    minLen: 5,
+    maxLen: 10,
+    noSpecialChars: specialCharactersList,
+    forbiddenValues: "*&",
+    noNchars: ["-", "'", " "],
+};
 
 describe("Input component", () => {
     it("should render input component", () => {
@@ -12,10 +34,7 @@ describe("Input component", () => {
             value="test value"
             id="test id"
             name="test name"
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
+            rules={[requiredRule()]}
         />);
 
         const inputComponent = screen.getByLabelText("Input text label");
@@ -36,10 +55,7 @@ describe("Input component", () => {
             id="test id"
             name="test name"
             value=""
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
+            rules={[requiredRule()]}
         />);
 
         const inputComponent = screen.getByLabelText(labelText, { selector: "input" });
@@ -60,10 +76,7 @@ describe("Input component", () => {
             id="test id"
             name="test name"
             value={value}
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
+            rules={[requiredRule()]}
         />);
 
         const inputComponent: HTMLInputElement = screen.getByLabelText(labelText);
@@ -90,10 +103,7 @@ describe("Input component", () => {
                     id="radio1id"
                     name="radioGroup"
                     value="radio1Value"
-                    rules={[{
-                        name: InputRule.required,
-                        message: "The field is required",
-                    }]}
+                    rules={[requiredRule()]}
                 />
                 <Input
                     type={InputType.radio}
@@ -101,10 +111,7 @@ describe("Input component", () => {
                     id="radio2id"
                     name="radioGroup"
                     value="radio2Value"
-                    rules={[{
-                        name: InputRule.required,
-                        message: "The field is required",
-                    }]}
+                    rules={[requiredRule()]}
                 />
             </>,
         );
@@ -128,10 +135,7 @@ describe("Input component", () => {
             id="inputId"
             name="name"
             value=""
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
+            rules={[requiredRule()]}
         />);
 
         const inputElement: HTMLInputElement = screen.getByLabelText("input label");
@@ -153,10 +157,7 @@ describe("Input component", () => {
             id="inputId"
             name="name"
             value=""
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
+            rules={[requiredRule()]}
         />);
 
         const inputElement: HTMLInputElement = screen.getByLabelText("input label");
@@ -167,5 +168,64 @@ describe("Input component", () => {
         const errorSpan = screen.queryByText("The field is required");
 
         expect(errorSpan).not.toBeInTheDocument();
+    });
+
+    it.each([
+        [
+            [requiredRule(), minRule(5)],
+            "",
+            [requiredRule().defaultMessage, minRule(5).defaultMessage],
+        ],
+        [
+            [requiredRule(customMessagesForTests.required), minRule(5, customMessagesForTests.min)],
+            "",
+            [customMessagesForTests.required, customMessagesForTests.min],
+        ],
+        [
+            [requiredRule(), minRule(rulesValuesForTests.min), maxRule(rulesValuesForTests.max)],
+            4,
+            [minRule(rulesValuesForTests.min).defaultMessage],
+        ],
+        [
+            [requiredRule(customMessagesForTests.required), minRule(rulesValuesForTests.min, customMessagesForTests.min), maxRule(rulesValuesForTests.max, customMessagesForTests.max)],
+            4,
+            [customMessagesForTests.min],
+        ],
+        [
+            [requiredRule(), minRule(rulesValuesForTests.min), maxRule(rulesValuesForTests.max)],
+            200,
+            [maxRule(rulesValuesForTests.max).defaultMessage],
+        ],
+        [
+            [requiredRule(), minRule(rulesValuesForTests.min, customMessagesForTests.min), maxRule(rulesValuesForTests.max, customMessagesForTests.max)],
+            200,
+            [customMessagesForTests.max],
+        ],
+    ])("should show correct errors under the input depending on the passed rules and value of the input", (rules, inputValue, errorMessages) => {
+        render(<Input
+            type={InputType.text}
+            label="TEST_LABEL"
+            id="TEST_ID"
+            name="TEST_NAME"
+            value=""
+            rules={rules}
+        />);
+
+        const inputElement: HTMLInputElement = screen.getByLabelText("TEST_LABEL");
+
+        act(() => inputElement.focus());
+        userEvent.type(inputElement, "D");
+        userEvent.clear(inputElement);
+
+        userEvent.type(inputElement, inputValue.toString());
+        const elementForFocusOut = screen.getByTestId("input-container");
+
+        userEvent.click(elementForFocusOut);
+
+        errorMessages.forEach((errorMessage) => {
+            const errorSpan = screen.queryByText(errorMessage);
+
+            expect(errorSpan).toBeInTheDocument();
+        });
     });
 });
