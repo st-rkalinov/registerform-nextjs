@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen, } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Input, { InputType } from "@src/components/Input/Input";
 import userEvent from "@testing-library/user-event";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
@@ -24,12 +24,12 @@ describe("Input component", () => {
     });
 
     it.each([
-        [InputType.email, "email label"],
-        [InputType.text, "text label"],
-        [InputType.checkbox, "checkbox label"],
-        [InputType.password, "password label"],
-        [InputType.radio, "radio label"],
-    ])("should render the correct type of input depending on the passed props (input type: %s) ", (inputType, labelText) => {
+        [InputType.email, "email label", InputType.email],
+        [InputType.text, "text label", InputType.text],
+        [InputType.checkbox, "checkbox label", InputType.checkbox],
+        [InputType.password, "password label", InputType.password],
+        [InputType.radio, "radio label", InputType.radio],
+    ])("should render the correct type of input depending on the passed props (input type: %s) ", (inputType, labelText, expectedType) => {
         render(<Input
             type={inputType}
             label={labelText}
@@ -42,9 +42,9 @@ describe("Input component", () => {
             }]}
         />);
 
-        const inputComponent = screen.getByLabelText(labelText);
+        const inputComponent = screen.getByLabelText(labelText, { selector: "input" });
 
-        expect(inputComponent).toBeInTheDocument();
+        expect(inputComponent.getAttribute("type")).toEqual(expectedType);
     });
 
     it.each([
@@ -82,28 +82,32 @@ describe("Input component", () => {
     });
 
     it("only one radio button from a group should be checked at a time", () => {
-        render(<Input
-            type={InputType.radio}
-            label="radio1"
-            id="radio1id"
-            name="radioGroup"
-            value="radio1Value"
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
-        />);
-        render(<Input
-            type={InputType.radio}
-            label="radio2"
-            id="radio2id"
-            name="radioGroup"
-            value="radio2Value"
-            rules={[{
-                name: InputRule.required,
-                message: "The field is required",
-            }]}
-        />);
+        render(
+            <>
+                <Input
+                    type={InputType.radio}
+                    label="radio1"
+                    id="radio1id"
+                    name="radioGroup"
+                    value="radio1Value"
+                    rules={[{
+                        name: InputRule.required,
+                        message: "The field is required",
+                    }]}
+                />
+                <Input
+                    type={InputType.radio}
+                    label="radio2"
+                    id="radio2id"
+                    name="radioGroup"
+                    value="radio2Value"
+                    rules={[{
+                        name: InputRule.required,
+                        message: "The field is required",
+                    }]}
+                />
+            </>,
+        );
 
         const radioOneElement: HTMLInputElement = screen.getByLabelText("radio1");
         const radioTwoElement: HTMLInputElement = screen.getByLabelText("radio2");

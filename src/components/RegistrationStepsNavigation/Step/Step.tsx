@@ -8,7 +8,7 @@ export enum RegistrationStepStatus {
     disabled = "disabled",
 }
 
-interface IProps {
+export interface IProps {
     text: string,
     stepNumber: number,
     status: RegistrationStepStatus

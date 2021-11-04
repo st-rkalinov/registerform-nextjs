@@ -1,16 +1,16 @@
 import React, { ReactComponentElement } from "react";
 
 interface IProps {
-    components: ReactComponentElement<any>[],
+    steps: ReactComponentElement<any>[],
 }
 
-const Stepper: React.FC<IProps> = ({ components }) => (
+const Stepper: React.FC<IProps> = ({ steps }) => (
 
     <div className="flex justify-center items-center">
-        {components.map((component, index) => (
+        {steps.map((component, index) => (
             <React.Fragment key={index}>
                 {component}
-                {index !== components.length - 1 ? <div className="w-20 border-t-2 border-gray-300 self-baseline mt-6" /> : null}
+                {index !== steps.length - 1 ? <div className="w-20 border-t-2 border-gray-300 self-baseline mt-6" /> : null}
             </React.Fragment>
         ))}
     </div>

@@ -29,7 +29,7 @@ const Register = () => {
             <div className="flex justify-around items-center p-9">
                 <h1 className="font-extrabold text-3xl">Register</h1>
             </div>
-            <Stepper components={stepComponents} />
+            <Stepper steps={stepComponents} />
             <Input
                 label="Username"
                 type={InputType.text}

@@ -23,7 +23,7 @@ describe("Registration Stepper navigation", () => {
                 status={RegistrationStepStatus.valid}
             />,
         ];
-        render(<Stepper components={stepComponents} />);
+        render(<Stepper steps={stepComponents} />);
 
         const accountDetailsNavigationComponent = screen.getByText(RegistrationStepText.AccountDetails);
         const userDetailsNavigationComponent = screen.getByText(RegistrationStepText.UserDetails);
