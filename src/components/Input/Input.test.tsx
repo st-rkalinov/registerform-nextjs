@@ -121,7 +121,7 @@ describe("Input component", () => {
         expect(radioTwoElement).toBeChecked();
     });
 
-    it("should show 'required' error under the input onFocusOut if the input is empty", () => {
+    it("should show 'required' error under the input onFocusOut if the input is empty AND its touched", () => {
         render(<Input
             type={InputType.text}
             label="input label"
@@ -135,13 +135,37 @@ describe("Input component", () => {
         />);
 
         const inputElement: HTMLInputElement = screen.getByLabelText("input label");
+        userEvent.type(inputElement, "test");
+        userEvent.clear(inputElement);
 
-        act(() => inputElement.focus());
         const elementForFocusOut = screen.getByTestId("input-container");
 
         userEvent.click(elementForFocusOut);
         const errorSpan = screen.getByText("The field is required");
 
         expect(errorSpan).toBeInTheDocument();
+    });
+
+    it("should NOT show 'required' error under the input onFocusOut if the input is empty AND it HAS NOT BEEN touched", () => {
+        render(<Input
+            type={InputType.text}
+            label="input label"
+            id="inputId"
+            name="name"
+            value=""
+            rules={[{
+                name: InputRule.required,
+                message: "The field is required",
+            }]}
+        />);
+
+        const inputElement: HTMLInputElement = screen.getByLabelText("input label");
+        act(() => inputElement.focus());
+        const elementForFocusOut = screen.getByTestId("input-container");
+
+        userEvent.click(elementForFocusOut);
+        const errorSpan = screen.queryByText("The field is required");
+
+        expect(errorSpan).not.toBeInTheDocument();
     });
 });

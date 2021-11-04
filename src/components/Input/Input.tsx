@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { IInputRule, } from "@src/interfaces/InputRuleInteface";
-import { InputValidator } from "@src/classes/InputValidator";
+import { IInputRule } from "@src/interfaces/InputRuleInteface";
+import useValidation from "@src/hooks/useValidation";
+import useIsTouched from "@src/hooks/useIsTouched";
 
 export enum InputType {
     text = "text",
@@ -28,23 +29,8 @@ const Input: React.FC<IProps> = ({
     rules,
 }) => {
     const [inputValue, setInputValue] = useState<string>(value || "");
-    const [errors, setErrors] = useState<string[]>([]);
-
-    const validateInputRules = (e: { target: HTMLInputElement }) => {
-        const inputErrors: string[] = [];
-
-        if (rules.length === 0) {
-            return;
-        }
-
-        rules.forEach((rule) => {
-            if (!InputValidator.validate(rule, e.target.value)) {
-                inputErrors.push(InputValidator.getValidationErrorMessage(rule));
-            }
-        });
-
-        setErrors(inputErrors);
-    };
+    const [isTouched, setIsTouched] = useIsTouched();
+    const [errors, checkForErrors] = useValidation(rules);
 
     return (
         <div data-testid="input-container">
@@ -54,8 +40,17 @@ const Input: React.FC<IProps> = ({
                 name={name}
                 id={id}
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onBlur={validateInputRules}
+                onChange={(e) => {
+                    if (!isTouched) {
+                        setIsTouched(true);
+                    }
+                    setInputValue(e.target.value);
+                }}
+                onBlur={(e) => {
+                    if (isTouched) {
+                        checkForErrors(e.target.value);
+                    }
+                }}
             />
             { errors.map((err) => (<span key={err.toString()}>{ err }</span>)) }
         </div>
