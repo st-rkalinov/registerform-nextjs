@@ -15,7 +15,6 @@ export interface IBasicInputRule {
     name: InputRule;
     defaultMessage: string,
     message?: string | undefined;
-    validator?: () => boolean;
 }
 
 export interface IMinRule extends IBasicInputRule {
@@ -43,11 +42,11 @@ export interface IRequiredRule extends IBasicInputRule {
 }
 
 export interface INoSpecialCharsRule extends IBasicInputRule {
-    noSpecialChars: string;
+    charactersAllowedRegex: string;
 }
 
-export interface IOnlyLetter extends IBasicInputRule {
-    onlyLetters: boolean;
+export interface IOnlyLetters extends IBasicInputRule {
+    onlyLettersRegex: string,
 }
 
 export interface INoNCharsNextToEachOther extends IBasicInputRule {
@@ -60,4 +59,4 @@ export type IInputRule = IMinRule | IBasicInputRule | IMaxRule | IForbiddenValue
 | IMinLenRule
 | INoNCharsNextToEachOther
 | INoSpecialCharsRule
-| IOnlyLetter;
+| IOnlyLetters;

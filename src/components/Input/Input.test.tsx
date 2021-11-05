@@ -2,7 +2,7 @@ import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import Input, { InputType } from "@src/components/Input/Input";
 import userEvent from "@testing-library/user-event";
-import { maxRule, minRule, requiredRule, specialCharactersList, } from "@src/utils/InputRulesUtils";
+import { maxRule, minRule, requiredRule } from "@src/utils/InputRulesUtils";
 
 const customMessagesForTests = {
     required: "custom req msg",
@@ -21,7 +21,6 @@ const rulesValuesForTests = {
     max: 10,
     minLen: 5,
     maxLen: 10,
-    noSpecialChars: specialCharactersList,
     forbiddenValues: "*&",
     noNchars: ["-", "'", " "],
 };
