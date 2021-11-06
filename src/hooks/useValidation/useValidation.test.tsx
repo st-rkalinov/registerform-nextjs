@@ -29,6 +29,7 @@ describe("useValidation Hook", () => {
         expect(result.current.errors.length).toEqual(0);
     });
 
+    //TODO: to be completed
     it("should throw error if min OR max rule is used but the passed value is is NaN", () => {
         const { result } = renderHook(() => useValidation([requiredRule(), minRule(5)]));
     });

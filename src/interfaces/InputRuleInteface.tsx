@@ -11,52 +11,9 @@ export enum InputRule {
     date = "date",
 }
 
-export interface IBasicInputRule {
+export interface IInputRule {
     name: InputRule;
     defaultMessage: string,
     message?: string | undefined;
+    validate: (inputValue: string) => boolean,
 }
-
-export interface IMinRule extends IBasicInputRule {
-    min: number
-}
-
-export interface IMaxRule extends IBasicInputRule {
-    max: number;
-}
-
-export interface IMinLenRule extends IBasicInputRule {
-    minLen: number
-}
-
-export interface IMaxLenRule extends IBasicInputRule {
-    maxLen: number;
-}
-
-export interface IForbiddenValues extends IBasicInputRule {
-    forbiddenValues: string[];
-}
-
-export interface IRequiredRule extends IBasicInputRule {
-    required: boolean;
-}
-
-export interface INoSpecialCharsRule extends IBasicInputRule {
-    charactersAllowedRegex: string;
-}
-
-export interface IOnlyLetters extends IBasicInputRule {
-    onlyLettersRegex: string,
-}
-
-export interface INoNCharsNextToEachOther extends IBasicInputRule {
-    charsCount: number
-    chars: string[];
-}
-
-export type IInputRule = IMinRule | IBasicInputRule | IMaxRule | IForbiddenValues | IRequiredRule
-| IMaxLenRule
-| IMinLenRule
-| INoNCharsNextToEachOther
-| INoSpecialCharsRule
-| IOnlyLetters;
