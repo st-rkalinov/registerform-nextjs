@@ -15,5 +15,10 @@ export interface IInputRule {
     name: InputRule;
     defaultMessage: string,
     message?: string | undefined;
-    isValid: (inputValue: string) => boolean,
 }
+
+export interface IIsValid {
+    isValid: (value: string) => boolean,
+}
+
+export interface IInputRuleValidatable extends IInputRule, IIsValid {}

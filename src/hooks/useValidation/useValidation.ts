@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { IInputRule } from "@src/interfaces/InputRuleInteface";
+import { IInputRuleValidatable } from "@src/interfaces/InputRuleInteface";
 
 interface IUseValidation {
     errors: string[],
     checkForErrors: (inputValue: string) => void,
 }
 
-const useValidation = (rules: IInputRule[]): IUseValidation => {
+const useValidation = (rules: IInputRuleValidatable[]): IUseValidation => {
     const [errors, setErrors] = useState<string[]>([]);
 
     const checkForErrors = (inputValue: string): void => {

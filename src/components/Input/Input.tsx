@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IInputRule } from "@src/interfaces/InputRuleInteface";
+import { IInputRuleValidatable } from "@src/interfaces/InputRuleInteface";
 import useValidation from "@src/hooks/useValidation/useValidation";
 import useIsTouched from "@src/hooks/useIsTouched/useIsTouched";
 
@@ -17,7 +17,7 @@ interface IProps {
     name: string,
     id: string,
     value: string,
-    rules: IInputRule[],
+    rules: IInputRuleValidatable[],
 }
 
 const Input: React.FC<IProps> = ({

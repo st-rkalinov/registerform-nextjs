@@ -36,7 +36,7 @@ const Register = () => {
                 name="username"
                 id="email"
                 value=""
-                rules={[Rule.required(), Rule.min(5), Rule.max(10)]}
+                rules={[Rule.required(), Rule.minLen(5), Rule.maxLen(10)]}
             />
             {/*<Input label="Email" type={InputType.email} name="email" id="username" value="" />
             <Input label="Password" type={InputType.password} name="password" id="password" value="" />
