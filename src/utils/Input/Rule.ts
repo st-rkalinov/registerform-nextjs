@@ -3,7 +3,7 @@ import { IInputRule, IInputRuleValidatable, InputRule } from "@src/interfaces/In
 export const charactersAllowedRegex = "^[0-9a-zA-Z]*$";
 export const onlyLettersRegex = "^[a-zA-Z]*$";
 
-const inputRuleBasicProps = (
+const basicProps = (
     name: InputRule,
     defaultMessage: string,
     message?: string,
@@ -15,11 +15,11 @@ const inputRuleBasicProps = (
 
 export const Rule = {
     required: (message?: string): IInputRuleValidatable => ({
-        ...inputRuleBasicProps(InputRule.required, "The field is required", message),
+        ...basicProps(InputRule.required, "The field is required", message),
         isValid: (inputValue) => inputValue !== "",
     }),
     min: (minValue: number, message?: string): IInputRuleValidatable & { min: number } => ({
-        ...inputRuleBasicProps(InputRule.min, `The field min value is ${minValue}`, message),
+        ...basicProps(InputRule.min, `The field min value is ${minValue}`, message),
         min: minValue,
         isValid: (inputValue) => {
             if (Number.isNaN(+inputValue)) {
@@ -30,7 +30,7 @@ export const Rule = {
         },
     }),
     max: (maxValue: number, message?: string): IInputRuleValidatable & { max: number } => ({
-        ...inputRuleBasicProps(InputRule.max, `The field max value is ${maxValue}`, message),
+        ...basicProps(InputRule.max, `The field max value is ${maxValue}`, message),
         max: maxValue,
         isValid: (inputValue) => {
             if (Number.isNaN(+inputValue)) {
@@ -44,7 +44,7 @@ export const Rule = {
         minLenValue: number,
         message?: string,
     ): IInputRuleValidatable & { minLen: number } => ({
-        ...inputRuleBasicProps(InputRule.minLen, `The field min length is ${minLenValue}`, message),
+        ...basicProps(InputRule.minLen, `The field min length is ${minLenValue}`, message),
         minLen: minLenValue,
         isValid: (inputValue) => inputValue.length >= minLenValue,
     }),
@@ -52,7 +52,7 @@ export const Rule = {
         maxLenValue: number,
         message?: string,
     ): IInputRuleValidatable & { maxLen: number } => ({
-        ...inputRuleBasicProps(InputRule.maxLen, `The field max length is ${maxLenValue}`, message),
+        ...basicProps(InputRule.maxLen, `The field max length is ${maxLenValue}`, message),
         maxLen: maxLenValue,
         isValid: (inputValue) => inputValue.length <= maxLenValue,
     }),
@@ -60,17 +60,17 @@ export const Rule = {
         forbiddenValues: string[],
         message?: string,
     ): IInputRuleValidatable & { forbiddenValues: string[] } => ({
-        ...inputRuleBasicProps(InputRule.forbiddenValues, `The field can not include ${forbiddenValues.join(" ")}`, message),
+        ...basicProps(InputRule.forbiddenValues, `The field can not include ${forbiddenValues.join(" ")}`, message),
         forbiddenValues,
         isValid: (inputValue) => false,
     }),
     noSpecialChars: (message?: string): IInputRuleValidatable & { charactersAllowedRegex: string } => ({
-        ...inputRuleBasicProps(InputRule.noSpecialChars, "The field cannot include special characters", message),
+        ...basicProps(InputRule.noSpecialChars, "The field cannot include special characters", message),
         charactersAllowedRegex,
         isValid: (inputValue) => false,
     }),
     onlyLetters: (message?: string): IInputRuleValidatable & { onlyLettersRegex: string } => ({
-        ...inputRuleBasicProps(InputRule.onlyLetters, "The field can include only letters characters", message),
+        ...basicProps(InputRule.onlyLetters, "The field can include only letters characters", message),
         onlyLettersRegex,
         isValid: (inputValue) => false,
     }),
@@ -79,7 +79,7 @@ export const Rule = {
         charsCount: number,
         message?: string,
     ): IInputRuleValidatable & { chars: string[], charsCount: number } => ({
-        ...inputRuleBasicProps(InputRule.no_N_charactersNextToEachOther, `The field can not include more than ${chars.join(", ")} next to each other`, message),
+        ...basicProps(InputRule.no_N_charactersNextToEachOther, `The field can not include more than ${chars.join(", ")} next to each other`, message),
         chars,
         charsCount,
         isValid: (inputValue) => false,
