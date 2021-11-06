@@ -2,7 +2,7 @@ import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import Input, { InputType } from "@src/components/Input/Input";
 import userEvent from "@testing-library/user-event";
-import { maxRule, minRule, requiredRule } from "@src/utils/InputRulesUtils";
+import { Rule } from "@src/utils/Input/Rule";
 
 const customMessagesForTests = {
     required: "custom req msg",
@@ -33,7 +33,7 @@ describe("Input component", () => {
             value="test value"
             id="test id"
             name="test name"
-            rules={[requiredRule()]}
+            rules={[Rule.required()]}
         />);
 
         const inputComponent = screen.getByLabelText("Input text label");
@@ -54,7 +54,7 @@ describe("Input component", () => {
             id="test id"
             name="test name"
             value=""
-            rules={[requiredRule()]}
+            rules={[Rule.required()]}
         />);
 
         const inputComponent = screen.getByLabelText(labelText, { selector: "input" });
@@ -75,7 +75,7 @@ describe("Input component", () => {
             id="test id"
             name="test name"
             value={value}
-            rules={[requiredRule()]}
+            rules={[Rule.required()]}
         />);
 
         const inputComponent: HTMLInputElement = screen.getByLabelText(labelText);
@@ -102,7 +102,7 @@ describe("Input component", () => {
                     id="radio1id"
                     name="radioGroup"
                     value="radio1Value"
-                    rules={[requiredRule()]}
+                    rules={[Rule.required()]}
                 />
                 <Input
                     type={InputType.radio}
@@ -110,7 +110,7 @@ describe("Input component", () => {
                     id="radio2id"
                     name="radioGroup"
                     value="radio2Value"
-                    rules={[requiredRule()]}
+                    rules={[Rule.required()]}
                 />
             </>,
         );
@@ -134,7 +134,7 @@ describe("Input component", () => {
             id="inputId"
             name="name"
             value=""
-            rules={[requiredRule()]}
+            rules={[Rule.required()]}
         />);
 
         const inputElement: HTMLInputElement = screen.getByLabelText("input label");
@@ -156,7 +156,7 @@ describe("Input component", () => {
             id="inputId"
             name="name"
             value=""
-            rules={[requiredRule()]}
+            rules={[Rule.required()]}
         />);
 
         const inputElement: HTMLInputElement = screen.getByLabelText("input label");
@@ -171,32 +171,32 @@ describe("Input component", () => {
 
     it.each([
         [
-            [requiredRule(), minRule(5)],
+            [Rule.required(), Rule.min(5)],
             "",
-            [requiredRule().defaultMessage, minRule(5).defaultMessage],
+            [Rule.required().defaultMessage, Rule.min(5).defaultMessage],
         ],
         [
-            [requiredRule(customMessagesForTests.required), minRule(5, customMessagesForTests.min)],
+            [Rule.required(customMessagesForTests.required), Rule.min(5, customMessagesForTests.min)],
             "",
             [customMessagesForTests.required, customMessagesForTests.min],
         ],
         [
-            [requiredRule(), minRule(rulesValuesForTests.min), maxRule(rulesValuesForTests.max)],
+            [Rule.required(), Rule.min(rulesValuesForTests.min), Rule.max(rulesValuesForTests.max)],
             4,
-            [minRule(rulesValuesForTests.min).defaultMessage],
+            [Rule.min(rulesValuesForTests.min).defaultMessage],
         ],
         [
-            [requiredRule(customMessagesForTests.required), minRule(rulesValuesForTests.min, customMessagesForTests.min), maxRule(rulesValuesForTests.max, customMessagesForTests.max)],
+            [Rule.required(customMessagesForTests.required), Rule.min(rulesValuesForTests.min, customMessagesForTests.min), Rule.max(rulesValuesForTests.max, customMessagesForTests.max)],
             4,
             [customMessagesForTests.min],
         ],
         [
-            [requiredRule(), minRule(rulesValuesForTests.min), maxRule(rulesValuesForTests.max)],
+            [Rule.required(), Rule.min(rulesValuesForTests.min), Rule.max(rulesValuesForTests.max)],
             200,
-            [maxRule(rulesValuesForTests.max).defaultMessage],
+            [Rule.max(rulesValuesForTests.max).defaultMessage],
         ],
         [
-            [requiredRule(), minRule(rulesValuesForTests.min, customMessagesForTests.min), maxRule(rulesValuesForTests.max, customMessagesForTests.max)],
+            [Rule.required(), Rule.min(rulesValuesForTests.min, customMessagesForTests.min), Rule.max(rulesValuesForTests.max, customMessagesForTests.max)],
             200,
             [customMessagesForTests.max],
         ],
@@ -216,7 +216,15 @@ describe("Input component", () => {
         userEvent.type(inputElement, "D");
         userEvent.clear(inputElement);
 
-        userEvent.type(inputElement, inputValue.toString());
+        /**
+         * The below IF is because of the JEST error if we "type" in a input element with empty string
+         */
+        if (inputValue === "") {
+            userEvent.click(inputElement);
+        } else {
+            userEvent.type(inputElement, inputValue.toString());
+        }
+
         const elementForFocusOut = screen.getByTestId("input-container");
 
         userEvent.click(elementForFocusOut);

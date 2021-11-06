@@ -1,19 +1,4 @@
-import {
-    charactersAllowedRegex,
-    forbiddenValuesRule,
-    maxLenRule,
-    maxRule,
-    maxRuleValidator,
-    minLenRule,
-    minRule,
-    minRuleValidator,
-    noNCharsNextToEachOtherRule,
-    noSpecialCharsRule,
-    onlyLettersRegex,
-    onlyLettersRule,
-    requiredRule,
-    requiredRuleValidator
-} from "@src/utils/InputRulesUtils";
+import { charactersAllowedRegex, onlyLettersRegex, Rule, } from "@src/utils/Input/Rule";
 import { expect } from "@jest/globals";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
@@ -21,21 +6,21 @@ const testMessage = "test message";
 
 describe("InputRulesUtils", () => {
     it("required rule should return correct object structure and values", () => {
-        const rule = requiredRule();
+        const rule = Rule.required();
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
         expect(rule.message).toEqual(undefined);
         expect(rule.name).toEqual(InputRule.required);
 
-        const ruleWithMessage = requiredRule(testMessage);
+        const ruleWithMessage = Rule.required(testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.required);
         expect(ruleWithMessage.message).toEqual(testMessage);
     });
 
     it("min rule should return correct object structure and values", () => {
         const minValue = 5;
-        const rule = minRule(minValue);
+        const rule = Rule.min(minValue);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -44,7 +29,7 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.min).toEqual(minValue);
 
-        const ruleWithMessage = minRule(5, testMessage);
+        const ruleWithMessage = Rule.min(5, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.min);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.min).toEqual(minValue);
@@ -52,7 +37,7 @@ describe("InputRulesUtils", () => {
 
     it("max rule should return correct object structure and values", () => {
         const maxValue = 5;
-        const rule = maxRule(maxValue);
+        const rule = Rule.max(maxValue);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -61,7 +46,7 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.max).toEqual(maxValue);
 
-        const ruleWithMessage = maxRule(5, testMessage);
+        const ruleWithMessage = Rule.max(5, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.max);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.max).toEqual(maxValue);
@@ -69,7 +54,7 @@ describe("InputRulesUtils", () => {
 
     it("minLen rule should return correct object structure and values", () => {
         const minLen = 5;
-        const rule = minLenRule(minLen);
+        const rule = Rule.minLen(minLen);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -78,7 +63,7 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.minLen).toEqual(minLen);
 
-        const ruleWithMessage = minLenRule(5, testMessage);
+        const ruleWithMessage = Rule.minLen(5, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.minLen);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.minLen).toEqual(minLen);
@@ -86,7 +71,7 @@ describe("InputRulesUtils", () => {
 
     it("maxLen rule should return correct object structure and values", () => {
         const maxLen = 5;
-        const rule = maxLenRule(maxLen);
+        const rule = Rule.maxLen(maxLen);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -95,7 +80,7 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.maxLen).toEqual(maxLen);
 
-        const ruleWithMessage = maxLenRule(5, testMessage);
+        const ruleWithMessage = Rule.maxLen(5, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.maxLen);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.maxLen).toEqual(maxLen);
@@ -103,7 +88,7 @@ describe("InputRulesUtils", () => {
 
     it("forbiddenValues rule should return correct object structure and values", () => {
         const forbiddenValues = ["Name, Email"];
-        const rule = forbiddenValuesRule(forbiddenValues);
+        const rule = Rule.forbiddenValues(forbiddenValues);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -113,14 +98,14 @@ describe("InputRulesUtils", () => {
         expect(rule.forbiddenValues).toHaveLength(forbiddenValues.length);
         expect(rule.forbiddenValues).toEqual(forbiddenValues);
 
-        const ruleWithMessage = forbiddenValuesRule(forbiddenValues, testMessage);
+        const ruleWithMessage = Rule.forbiddenValues(forbiddenValues, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.forbiddenValues);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.forbiddenValues).toEqual(forbiddenValues);
     });
 
     it("noSpecialChars rule should return correct object structure and values", () => {
-        const rule = noSpecialCharsRule();
+        const rule = Rule.noSpecialChars();
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -129,14 +114,14 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.charactersAllowedRegex).toEqual(charactersAllowedRegex);
 
-        const ruleWithMessage = noSpecialCharsRule(testMessage);
+        const ruleWithMessage = Rule.noSpecialChars(testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.noSpecialChars);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.charactersAllowedRegex).toEqual(charactersAllowedRegex);
     });
 
     it("onlyLetters rule should return correct object structure and values", () => {
-        const rule = onlyLettersRule();
+        const rule = Rule.onlyLetters();
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -145,7 +130,7 @@ describe("InputRulesUtils", () => {
         expect(rule.message).toEqual(undefined);
         expect(rule.onlyLettersRegex).toEqual(onlyLettersRegex);
 
-        const ruleWithMessage = onlyLettersRule(testMessage);
+        const ruleWithMessage = Rule.onlyLetters(testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.onlyLetters);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.onlyLettersRegex).toEqual(onlyLettersRegex);
@@ -155,7 +140,7 @@ describe("InputRulesUtils", () => {
         const charsForTest = ["-' "];
         const charsCountForTest = 2;
 
-        const rule = noNCharsNextToEachOtherRule(charsForTest, charsCountForTest);
+        const rule = Rule.noNCharsNextToEachOther(charsForTest, charsCountForTest);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
@@ -166,7 +151,7 @@ describe("InputRulesUtils", () => {
         expect(rule.chars).toEqual(charsForTest);
         expect(rule.charsCount).toEqual(charsCountForTest);
 
-        const ruleWithMessage = noNCharsNextToEachOtherRule(charsForTest, charsCountForTest, testMessage);
+        const ruleWithMessage = Rule.noNCharsNextToEachOther(charsForTest, charsCountForTest, testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.no_N_charactersNextToEachOther);
         expect(ruleWithMessage.message).toEqual(testMessage);
         expect(ruleWithMessage.chars).toEqual(charsForTest);
@@ -178,8 +163,7 @@ describe("InputRulesUtils", () => {
             ["", false],
             ["asd", true],
         ])("required validator should return correct value", (inputValue, expectedResult) => {
-            const rule = requiredRuleValidator(inputValue);
-            expect(rule).toEqual(expectedResult);
+            expect(Rule.required().isValid(inputValue)).toEqual(expectedResult);
         });
 
         it.each([
@@ -188,12 +172,11 @@ describe("InputRulesUtils", () => {
             ["4", 4, true],
             ["5", 4, true],
         ])("min validator should return correct value", (inputValue, minValue, expectedResult) => {
-            const rule = minRuleValidator(minValue, inputValue);
-            expect(rule).toEqual(expectedResult);
+            expect(Rule.min(minValue).isValid(inputValue)).toEqual(expectedResult);
         });
 
         it("min validator should throw error if inputValue cannot be a number", () => {
-            expect(() => minRuleValidator(5, "asd")).toThrow("NaN input value");
+            expect(() => Rule.min(5).isValid("asd")).toThrow("NaN input value");
         });
 
         it.each([
@@ -202,12 +185,11 @@ describe("InputRulesUtils", () => {
             ["10", 10, true],
             ["5", 10, true],
         ])("max validator should return correct value", (inputValue, maxValue, expectedResult) => {
-            const rule = maxRuleValidator(maxValue, inputValue);
-            expect(rule).toEqual(expectedResult);
+            expect(Rule.max(maxValue).isValid(inputValue)).toEqual(expectedResult);
         });
 
         it("max validator should throw error if inputValue cannot be a number", () => {
-            expect(() => maxRuleValidator(10, "asd")).toThrow("NaN input value");
+            expect(() => Rule.max(10).isValid("asd")).toThrow("NaN input value");
         });
     });
 });

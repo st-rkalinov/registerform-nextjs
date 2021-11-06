@@ -8,14 +8,14 @@ export const Rule = {
         name: InputRule.required,
         message,
         defaultMessage: "The field is required",
-        validate: (inputValue: string) => inputValue !== "",
+        isValid: (inputValue: string) => inputValue !== "",
     }),
     min: (minValue: number, message?: string): IInputRule & { min: number } => ({
         name: InputRule.min,
         message,
         min: minValue,
         defaultMessage: `The field min value is ${minValue}`,
-        validate: (inputValue: string) => {
+        isValid: (inputValue: string) => {
             if (Number.isNaN(+inputValue)) {
                 throw new Error("NaN input value");
             }
@@ -28,7 +28,7 @@ export const Rule = {
         message,
         max: maxValue,
         defaultMessage: `The field max value is ${maxValue}`,
-        validate: (inputValue: string) => {
+        isValid: (inputValue: string) => {
             if (Number.isNaN(+inputValue)) {
                 throw new Error("NaN input value");
             }
@@ -41,35 +41,35 @@ export const Rule = {
         message,
         minLen: minLenValue,
         defaultMessage: `The field min length is ${minLenValue}`,
-        validate: (inputValue: string) => inputValue.length >= minLenValue,
+        isValid: (inputValue: string) => inputValue.length >= minLenValue,
     }),
     maxLen: (maxLenValue: number, message?: string): IInputRule & { maxLen: number } => ({
         name: InputRule.maxLen,
         message,
         maxLen: maxLenValue,
         defaultMessage: `The field max length is ${maxLenValue}`,
-        validate: (inputValue: string) => inputValue.length <= maxLenValue,
+        isValid: (inputValue: string) => inputValue.length <= maxLenValue,
     }),
     forbiddenValues: (forbiddenValues: string[], message?: string): IInputRule & { forbiddenValues: string[] } => ({
         name: InputRule.forbiddenValues,
         message,
         forbiddenValues,
         defaultMessage: `The field can not include ${forbiddenValues.join(" ")}`,
-        validate: (inputValue: string) => false,
+        isValid: (inputValue: string) => false,
     }),
     noSpecialChars: (message?: string): IInputRule & { charactersAllowedRegex: string } => ({
         name: InputRule.noSpecialChars,
         message,
         charactersAllowedRegex,
         defaultMessage: "The field cannot include special characters",
-        validate: (inputValue: string) => false,
+        isValid: (inputValue: string) => false,
     }),
     onlyLetters: (message?: string): IInputRule & { onlyLettersRegex: string } => ({
         name: InputRule.onlyLetters,
         message,
         onlyLettersRegex,
         defaultMessage: "The field can include only letters characters",
-        validate: (inputValue: string) => false,
+        isValid: (inputValue: string) => false,
     }),
     noNCharsNextToEachOther: (chars: string[], charsCount: number, message?: string): IInputRule & { chars: string[], charsCount: number } => ({
         name: InputRule.no_N_charactersNextToEachOther,
@@ -77,6 +77,6 @@ export const Rule = {
         chars,
         charsCount,
         defaultMessage: `The field can not include more than ${chars.join(", ")} next to each other`,
-        validate: (inputValue: string) => false,
+        isValid: (inputValue: string) => false,
     }),
 };

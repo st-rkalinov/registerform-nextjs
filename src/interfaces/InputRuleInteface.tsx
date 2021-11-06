@@ -15,5 +15,5 @@ export interface IInputRule {
     name: InputRule;
     defaultMessage: string,
     message?: string | undefined;
-    validate: (inputValue: string) => boolean,
+    isValid: (inputValue: string) => boolean,
 }
