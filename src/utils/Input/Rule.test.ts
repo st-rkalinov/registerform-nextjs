@@ -176,7 +176,7 @@ describe("InputRulesUtils", () => {
         });
 
         it("min validator should throw error if inputValue cannot be a number", () => {
-            expect(() => Rule.min(5).isValid("asd")).toThrow("NaN input value");
+            expect(() => Rule.min(5).isValid("asd")).toThrow("The value entered is not a number");
         });
 
         it.each([
@@ -189,7 +189,7 @@ describe("InputRulesUtils", () => {
         });
 
         it("max validator should throw error if inputValue cannot be a number", () => {
-            expect(() => Rule.max(10).isValid("asd")).toThrow("NaN input value");
+            expect(() => Rule.max(10).isValid("asd")).toThrow("The value entered is not a number");
         });
     });
 });

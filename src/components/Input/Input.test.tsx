@@ -14,6 +14,7 @@ const customMessagesForTests = {
     noSpecialChars: "custom noSpecialChars msg",
     onlyLetters: "custom onlyLetters msg",
     noNchars: "custom noNChars msg",
+    notANumber: "The value entered is not a number",
 };
 
 const rulesValuesForTests = {

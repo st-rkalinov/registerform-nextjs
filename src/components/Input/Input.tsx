@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { IInputRuleValidatable } from "@src/interfaces/InputRuleInteface";
 import useValidation from "@src/hooks/useValidation/useValidation";
 import useIsTouched from "@src/hooks/useIsTouched/useIsTouched";
+import { IInputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
 export enum InputType {
     text = "text",
@@ -17,7 +17,7 @@ interface IProps {
     name: string,
     id: string,
     value: string,
-    rules: IInputRuleValidatable[],
+    rules: (IInputRule & IValidatable)[],
 }
 
 const Input: React.FC<IProps> = ({
