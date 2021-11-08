@@ -2,9 +2,8 @@ import {
     firstNameLastNameRegex,
     moreThanTwoSpacesDashesApostrophes,
     noSpecialCharacterRegex,
-    Rule
-} from "@src/utils/Input/Rule";
-import { expect } from "@jest/globals";
+    Rule,
+} from "@src/features/Input/Rule";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
 const testMessage = "test message";
@@ -187,6 +186,16 @@ describe("InputRulesUtils", () => {
         ])("forbiddenValues validator should return correct value", (inputValue, forbiddenValues, expectedResult) => {
             expect(Rule.forbiddenValues(forbiddenValues).isValid(inputValue)).toEqual(expectedResult);
         });
+
+        //TODO: to make correct implementation
+        it.each([
+            ["", true],
+            ["a", true],
+            ["SomeFirstName", false],
+            ["stoyan", false],
+            ["SomeLastName Asd", false],
+            ["Some valid value", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
+        ])("date validator should return correct value", () => undefined);
 
         it.each([
             ["", noSpecialCharacterRegex, true],

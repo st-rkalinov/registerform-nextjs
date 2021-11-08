@@ -3,7 +3,7 @@ import Stepper from "@src/components/Stepper/Stepper";
 import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
 import Input, { InputType } from "@src/components/Input/Input";
-import { Rule } from "@src/utils/Input/Rule";
+import { emailRegex, noSpecialCharacterRegex, Rule } from "@src/features/Input/Rule";
 
 const Register = () => {
     const stepComponents = [
@@ -34,15 +34,43 @@ const Register = () => {
                 label="Username"
                 type={InputType.text}
                 name="username"
-                id="email"
+                id="username"
                 value=""
                 rules={[Rule.required(), Rule.minLen(5), Rule.maxLen(10)]}
             />
-            {/*<Input label="Email" type={InputType.email} name="email" id="username" value="" />
-            <Input label="Password" type={InputType.password} name="password" id="password" value="" />
-            <Input label="Male" type={InputType.radio} name="gender" id="gender1" value="Male" />
-            <Input label="Female" type={InputType.radio} name="gender" id="gender2" value="Female" />
-            <Input label="Some long checkbox label" type={InputType.checkbox} name="gender" id="gender2" value="Female" />*/}
+            <Input
+                label="Email"
+                type={InputType.email}
+                name="email"
+                id="email"
+                value=""
+                rules={[Rule.required(), Rule.maxLen(50), Rule.regexExp(emailRegex, "Invalid email address")]}
+            />
+            <Input
+                label="Password"
+                type={InputType.password}
+                name="password"
+                id="password"
+                value=""
+                rules={[Rule.required(), Rule.maxLen(12), Rule.minLen(8), Rule.regexExp(noSpecialCharacterRegex, "The field cannot include special characters")]}
+            />
+            <Input
+                label="Male"
+                type={InputType.radio}
+                name="gender"
+                id="gender1"
+                value="Male"
+                rules={[Rule.required()]}
+            />
+            <Input
+                label="Female"
+                type={InputType.radio}
+                name="gender"
+                id="gender2"
+                value="Female"
+                rules={[Rule.required()]}
+            />
+            <Input label="Some long checkbox label" type={InputType.checkbox} name="gender" id="gender2" value="Female" rules={[]} />
         </div>
     );
 };

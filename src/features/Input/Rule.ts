@@ -5,6 +5,7 @@ export const noSpecialCharacterPlusSpaceRegex = /^[0-9a-zA-Z\s]*$/;
 export const onlyLettersRegex = /^[a-zA-Z]*$/;
 export const firstNameLastNameRegex = /^[a-zA-Z\s'-]*$/;
 export const moreThanTwoSpacesDashesApostrophes = /([\s\-'])\1{2,}/;
+export const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const basicProps = (
     name: InputRule,

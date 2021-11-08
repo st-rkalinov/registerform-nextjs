@@ -2,7 +2,7 @@ import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import Input, { InputType } from "@src/components/Input/Input";
 import userEvent from "@testing-library/user-event";
-import { Rule } from "@src/utils/Input/Rule";
+import { Rule } from "@src/features/Input/Rule";
 
 const customMessagesForTests = {
     required: "custom req msg",

@@ -1,6 +1,6 @@
 import useValidation from "@src/hooks/useValidation/useValidation";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { Rule } from "@src/utils/Input/Rule";
+import { Rule } from "@src/features/Input/Rule";
 
 describe("useValidation Hook", () => {
     it("should return proper types and values on the initial call of the hook", () => {
