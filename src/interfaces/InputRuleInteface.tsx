@@ -6,7 +6,6 @@ export enum InputRule {
     maxLen = "maxLen",
     forbiddenValues = "forbiddenValues",
     regexExp = "regexExp",
-    no_N_charactersNextToEachOther = "no_N_charactersNextToEachOther",
     date = "date",
 }
 

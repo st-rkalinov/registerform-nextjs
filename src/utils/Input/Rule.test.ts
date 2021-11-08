@@ -1,4 +1,9 @@
-import { firstNameLastNameRegex, noSpecialCharacterRegex, Rule } from "@src/utils/Input/Rule";
+import {
+    firstNameLastNameRegex,
+    moreThanTwoSpacesDashesApostrophes,
+    noSpecialCharacterRegex,
+    Rule
+} from "@src/utils/Input/Rule";
 import { expect } from "@jest/globals";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
@@ -120,28 +125,6 @@ describe("InputRulesUtils", () => {
         expect(ruleWithMessage.regex).toEqual(noSpecialCharacterRegex);
     });
 
-    it("noNchars rule should return correct object structure and values", () => {
-        const charsForTest = ["-' "];
-        const charsCountForTest = 2;
-
-        const rule = Rule.noNCharsNextToEachOther(charsForTest, charsCountForTest);
-
-        expect(rule).toHaveProperty("name");
-        expect(rule).toHaveProperty("message");
-        expect(rule).toHaveProperty("chars");
-        expect(rule).toHaveProperty("charsCount");
-        expect(rule.name).toEqual(InputRule.no_N_charactersNextToEachOther);
-        expect(rule.message).toEqual(undefined);
-        expect(rule.chars).toEqual(charsForTest);
-        expect(rule.charsCount).toEqual(charsCountForTest);
-
-        const ruleWithMessage = Rule.noNCharsNextToEachOther(charsForTest, charsCountForTest, testMessage);
-        expect(ruleWithMessage.name).toEqual(InputRule.no_N_charactersNextToEachOther);
-        expect(ruleWithMessage.message).toEqual(testMessage);
-        expect(ruleWithMessage.chars).toEqual(charsForTest);
-        expect(ruleWithMessage.charsCount).toEqual(charsCountForTest);
-    });
-
     describe("InputRulesUtils validators", () => {
         it.each([
             ["", false],
@@ -225,6 +208,18 @@ describe("InputRulesUtils", () => {
             ["Stoyan-Kalinov", firstNameLastNameRegex, true],
             ["Stoyan't-Kalinov", firstNameLastNameRegex, true],
             ["Stoyan't-Kalinov Asd", firstNameLastNameRegex, true],
+            ["---", moreThanTwoSpacesDashesApostrophes, true],
+            ["   ", moreThanTwoSpacesDashesApostrophes, true],
+            ["'''", moreThanTwoSpacesDashesApostrophes, true],
+            ["--", moreThanTwoSpacesDashesApostrophes, false],
+            ["''", moreThanTwoSpacesDashesApostrophes, false],
+            ["  ", moreThanTwoSpacesDashesApostrophes, false],
+            ["asd--", moreThanTwoSpacesDashesApostrophes, false],
+            ["Stoyan't-Kalinov", moreThanTwoSpacesDashesApostrophes, false],
+            ["Stoyan't-Kalinov's", moreThanTwoSpacesDashesApostrophes, false],
+            ["Stoyan't--Kalinov's", moreThanTwoSpacesDashesApostrophes, false],
+            ["Stoyan't---Kalinov's", moreThanTwoSpacesDashesApostrophes, true],
+            ["Stoyan Kalinov", moreThanTwoSpacesDashesApostrophes, false],
         ])("regexExp validator should return correct value depending on the regex passed", (inputValue, regex: RegExp, expectedResult) => {
             expect(Rule.regexExp(regex).isValid(inputValue)).toEqual(expectedResult);
         });

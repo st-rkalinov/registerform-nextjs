@@ -4,6 +4,7 @@ export const noSpecialCharacterRegex = /^[0-9a-zA-Z]*$/;
 export const noSpecialCharacterPlusSpaceRegex = /^[0-9a-zA-Z\s]*$/;
 export const onlyLettersRegex = /^[a-zA-Z]*$/;
 export const firstNameLastNameRegex = /^[a-zA-Z\s'-]*$/;
+export const moreThanTwoSpacesDashesApostrophes = /([\s\-'])\1{2,}/;
 
 const basicProps = (
     name: InputRule,
@@ -75,15 +76,5 @@ export const Rule = {
         ...basicProps(InputRule.regexExp, `The field does not follow the pattern ${regex}`, message),
         regex,
         isValid: (inputValue) => regex.test(inputValue),
-    }),
-    noNCharsNextToEachOther: (
-        chars: string[],
-        charsCount: number,
-        message?: string,
-    ): IInputRule & IValidatable & { chars: string[], charsCount: number } => ({
-        ...basicProps(InputRule.no_N_charactersNextToEachOther, `The field can not include more than ${chars.join(", ")} next to each other`, message),
-        chars,
-        charsCount,
-        isValid: (inputValue) => false,
     }),
 };
