@@ -1,4 +1,4 @@
-import { charactersAllowedRegex, onlyLettersRegex, Rule } from "@src/utils/Input/Rule";
+import { noSpecialCharacterRegex, onlyLettersRegex, Rule } from "@src/utils/Input/Rule";
 import { expect } from "@jest/globals";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
@@ -112,12 +112,12 @@ describe("InputRulesUtils", () => {
         expect(rule).toHaveProperty("charactersAllowedRegex");
         expect(rule.name).toEqual(InputRule.noSpecialChars);
         expect(rule.message).toEqual(undefined);
-        expect(rule.charactersAllowedRegex).toEqual(charactersAllowedRegex);
+        expect(rule.charactersAllowedRegex).toEqual(noSpecialCharacterRegex);
 
         const ruleWithMessage = Rule.noSpecialChars(testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.noSpecialChars);
         expect(ruleWithMessage.message).toEqual(testMessage);
-        expect(ruleWithMessage.charactersAllowedRegex).toEqual(charactersAllowedRegex);
+        expect(ruleWithMessage.charactersAllowedRegex).toEqual(noSpecialCharacterRegex);
     });
 
     it("onlyLetters rule should return correct object structure and values", () => {
@@ -128,12 +128,12 @@ describe("InputRulesUtils", () => {
         expect(rule).toHaveProperty("onlyLettersRegex");
         expect(rule.name).toEqual(InputRule.onlyLetters);
         expect(rule.message).toEqual(undefined);
-        expect(rule.onlyLettersRegex).toEqual(onlyLettersRegex);
+        expect(rule.onlyLettersAllowedRegex).toEqual(onlyLettersRegex);
 
         const ruleWithMessage = Rule.onlyLetters(testMessage);
         expect(ruleWithMessage.name).toEqual(InputRule.onlyLetters);
         expect(ruleWithMessage.message).toEqual(testMessage);
-        expect(ruleWithMessage.onlyLettersRegex).toEqual(onlyLettersRegex);
+        expect(ruleWithMessage.onlyLettersAllowedRegex).toEqual(onlyLettersRegex);
     });
 
     it("noNchars rule should return correct object structure and values", () => {
@@ -219,6 +219,18 @@ describe("InputRulesUtils", () => {
             ["Some valid value", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
         ])("forbiddenValues validator should return correct value", (inputValue, forbiddenValues, expectedResult) => {
             expect(Rule.forbiddenValues(forbiddenValues).isValid(inputValue)).toEqual(expectedResult);
+        });
+
+        it.each([
+            ["", true],
+            ["a", true],
+            ["@someValue", false],
+            ["$-someOtherValue", false],
+            ["@!%$@#5", false],
+            ["Some value with spaces", false],
+            ["PasswordWithoutSpaces", true],
+        ])("noSpecialChars validator should return correct value", (inputValue, expectedResult) => {
+            expect(Rule.noSpecialChars().isValid(inputValue)).toEqual(expectedResult);
         });
     });
 });

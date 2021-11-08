@@ -1,7 +1,8 @@
 import { IInputRule, InputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
-export const charactersAllowedRegex = "^[0-9a-zA-Z]*$";
-export const onlyLettersRegex = "^[a-zA-Z]*$";
+export const noSpecialCharacterRegex = /^[0-9a-zA-Z]*$/;
+export const noSpecialCharacterPlusSpaceRegex = /^[0-9a-zA-Z\s]*$/;
+export const onlyLettersRegex = /^[a-zA-Z]*$/;
 
 const basicProps = (
     name: InputRule,
@@ -69,14 +70,14 @@ export const Rule = {
             return !lowerCaseForbiddenValues.some((forbiddenValue) => inputValueValues.includes(forbiddenValue));
         },
     }),
-    noSpecialChars: (message?: string): IInputRule & IValidatable & { charactersAllowedRegex: string } => ({
+    noSpecialChars: (message?: string): IInputRule & IValidatable & { charactersAllowedRegex: RegExp } => ({
         ...basicProps(InputRule.noSpecialChars, "The field cannot include special characters", message),
-        charactersAllowedRegex,
-        isValid: (inputValue) => false,
+        charactersAllowedRegex: noSpecialCharacterRegex,
+        isValid: (inputValue) => noSpecialCharacterRegex.test(inputValue),
     }),
-    onlyLetters: (message?: string): IInputRule & IValidatable & { onlyLettersRegex: string } => ({
+    onlyLetters: (message?: string): IInputRule & IValidatable & { onlyLettersAllowedRegex: RegExp } => ({
         ...basicProps(InputRule.onlyLetters, "The field can include only letters characters", message),
-        onlyLettersRegex,
+        onlyLettersAllowedRegex: onlyLettersRegex,
         isValid: (inputValue) => false,
     }),
     noNCharsNextToEachOther: (
