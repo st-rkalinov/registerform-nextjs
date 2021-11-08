@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Stepper from "@src/components/Stepper/Stepper";
 import { RegistrationStepText } from "@src/pages";
-import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
+import Step, { RegistrationStepStatus } from "@src/components/Register/RegistrationStepsNavigation/Step/Step";
 
 describe("Registration Stepper navigation", () => {
     it("should render all steps", () => {
@@ -11,16 +11,19 @@ describe("Registration Stepper navigation", () => {
                 text={RegistrationStepText.AccountDetails}
                 stepNumber={1}
                 status={RegistrationStepStatus.inProgress}
+                onStepClick={() => {}}
             />,
             <Step
                 text={RegistrationStepText.UserDetails}
                 stepNumber={2}
                 status={RegistrationStepStatus.invalid}
+                onStepClick={() => {}}
             />,
             <Step
                 text={RegistrationStepText.ContactDetails}
                 stepNumber={3}
                 status={RegistrationStepStatus.valid}
+                onStepClick={() => {}}
             />,
         ];
         render(<Stepper steps={stepComponents} />);

@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ContactDetails
-    from "@src/components/RegistrationStepsNavigation/ContactDetails/ContactDetails";
+import ContactDetails from "@src/components/Register/ContactDetails/ContactDetails";
 
 describe("Contact Details", () => {
     it("should render contact details component", () => {

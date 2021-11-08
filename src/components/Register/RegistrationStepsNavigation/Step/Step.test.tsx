@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
+import Step, { RegistrationStepStatus } from "@src/components/Register/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
 
 describe("Registration step component", () => {
@@ -12,6 +12,7 @@ describe("Registration step component", () => {
                 text={text}
                 stepNumber={1}
                 status={RegistrationStepStatus.inProgress}
+                onStepClick={() => {}}
             />,
         );
         const registerHeading = screen.getByText(text);
@@ -29,6 +30,7 @@ describe("Registration step component", () => {
                 text={text}
                 status={RegistrationStepStatus.inProgress}
                 stepNumber={number}
+                onStepClick={() => {}}
             />,
         );
 
@@ -50,6 +52,7 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
+                onStepClick={() => {}}
             />,
         );
 
@@ -69,6 +72,7 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
+                onStepClick={() => {}}
             />,
         );
 
@@ -88,6 +92,7 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
+                onStepClick={() => {}}
             />,
         );
 
@@ -105,6 +110,7 @@ describe("Registration step component", () => {
                 text={RegistrationStepText.AccountDetails}
                 status={status}
                 stepNumber={1}
+                onStepClick={() => {}}
             />,
         );
 

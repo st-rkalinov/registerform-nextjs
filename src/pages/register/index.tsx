@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from "react";
 import Stepper from "@src/components/Stepper/Stepper";
-import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
+import Step, { RegistrationStepStatus } from "@src/components/Register/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
-import AccountDetails
-    from "@src/components/RegistrationStepsNavigation/AccountDetails/AccountDetails";
-import UserDetails from "@src/components/RegistrationStepsNavigation/UserDetails/UserDetails";
-import ContactDetails
-    from "@src/components/RegistrationStepsNavigation/ContactDetails/ContactDetails";
+import AccountDetails from "@src/components/Register/AccountDetails/AccountDetails";
+import UserDetails from "@src/components/Register/UserDetails/UserDetails";
+import ContactDetails from "@src/components/Register/ContactDetails/ContactDetails";
 
 const Register = () => {
     const [registrationStep, setRegistrationStep] = useState(RegistrationStepText.AccountDetails);
@@ -50,8 +48,10 @@ const Register = () => {
             <div className="flex justify-around items-center p-9">
                 <h1 className="font-extrabold text-3xl">Register</h1>
             </div>
-            <Stepper steps={stepComponents} />
-            {registerContent()}
+            <div className="flex-col w-1/2 justify-center mx-auto">
+                <Stepper steps={stepComponents} />
+                {registerContent()}
+            </div>
             {/* <Input
                 label="Username"
                 type={InputType.text}

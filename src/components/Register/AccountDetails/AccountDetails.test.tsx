@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import AccountDetails
-    from "@src/components/RegistrationStepsNavigation/AccountDetails/AccountDetails";
+import AccountDetails from "@src/components/Register/AccountDetails/AccountDetails";
 
 describe("Account Details", () => {
     it("should render account details component", () => {
