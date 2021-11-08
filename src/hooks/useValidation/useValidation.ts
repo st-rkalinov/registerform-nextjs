@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { IInputRuleValidatable } from "@src/interfaces/InputRuleInteface";
+import { IInputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
 interface IUseValidation {
     errors: string[],
     checkForErrors: (inputValue: string) => void,
 }
 
-const useValidation = (rules: IInputRuleValidatable[]): IUseValidation => {
+const useValidation = (rules: (IInputRule & IValidatable)[]): IUseValidation => {
     const [errors, setErrors] = useState<string[]>([]);
 
     const checkForErrors = (inputValue: string): void => {
@@ -18,7 +18,7 @@ const useValidation = (rules: IInputRuleValidatable[]): IUseValidation => {
 
         rules.forEach((rule) => {
             if (!rule.isValid(inputValue)) {
-                inputErrors.push(rule?.message || rule.defaultMessage);
+                inputErrors.push(rule.message || rule.defaultMessage);
             }
         });
 

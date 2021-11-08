@@ -209,5 +209,16 @@ describe("InputRulesUtils", () => {
         ])("maxLen validator should return correct value", (inputValue, minValue, expectedResult) => {
             expect(Rule.maxLen(minValue).isValid(inputValue)).toEqual(expectedResult);
         });
+
+        it.each([
+            ["", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
+            ["a", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
+            ["SomeFirstName", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], false],
+            ["stoyan", ["SomeFirstName", "stoyan", "SomeLastName"], false],
+            ["SomeLastName Asd", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], false],
+            ["Some valid value", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
+        ])("forbiddenValues validator should return correct value", (inputValue, forbiddenValues, expectedResult) => {
+            expect(Rule.forbiddenValues(forbiddenValues).isValid(inputValue)).toEqual(expectedResult);
+        });
     });
 });

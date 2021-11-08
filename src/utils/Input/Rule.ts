@@ -1,4 +1,4 @@
-import { IInputRule, InputRule, IValidatable, } from "@src/interfaces/InputRuleInteface";
+import { IInputRule, InputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
 export const charactersAllowedRegex = "^[0-9a-zA-Z]*$";
 export const onlyLettersRegex = "^[a-zA-Z]*$";
@@ -62,7 +62,12 @@ export const Rule = {
     ): IInputRule & IValidatable & { forbiddenValues: string[] } => ({
         ...basicProps(InputRule.forbiddenValues, `The field can not include ${forbiddenValues.join(" ")}`, message),
         forbiddenValues,
-        isValid: (inputValue) => false,
+        isValid: (inputValue) => {
+            const inputValueValues = inputValue.split(" ").map((val) => val.toLowerCase());
+            const lowerCaseForbiddenValues = forbiddenValues.map((val) => val.toLowerCase());
+
+            return !lowerCaseForbiddenValues.some((forbiddenValue) => inputValueValues.includes(forbiddenValue));
+        },
     }),
     noSpecialChars: (message?: string): IInputRule & IValidatable & { charactersAllowedRegex: string } => ({
         ...basicProps(InputRule.noSpecialChars, "The field cannot include special characters", message),
