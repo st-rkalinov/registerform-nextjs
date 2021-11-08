@@ -6,7 +6,7 @@ describe("User Details", () => {
     it("should render user details component", () => {
         render(<UserDetails />);
 
-        const header = screen.getByText("User Details");
+        const header = screen.getByText("User Details Form");
         expect(header).toBeInTheDocument();
     });
 });

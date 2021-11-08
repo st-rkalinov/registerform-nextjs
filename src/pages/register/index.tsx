@@ -1,28 +1,49 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Stepper from "@src/components/Stepper/Stepper";
 import Step, { RegistrationStepStatus } from "@src/components/RegistrationStepsNavigation/Step/Step";
 import { RegistrationStepText } from "@src/pages";
-import Input, { InputType } from "@src/components/Input/Input";
-import { emailRegex, noSpecialCharacterRegex, Rule } from "@src/features/Input/Rule";
+import AccountDetails
+    from "@src/components/RegistrationStepsNavigation/AccountDetails/AccountDetails";
+import UserDetails from "@src/components/RegistrationStepsNavigation/UserDetails/UserDetails";
+import ContactDetails
+    from "@src/components/RegistrationStepsNavigation/ContactDetails/ContactDetails";
 
 const Register = () => {
+    const [registrationStep, setRegistrationStep] = useState(RegistrationStepText.AccountDetails);
+
     const stepComponents = [
         <Step
             text={RegistrationStepText.AccountDetails}
             stepNumber={1}
             status={RegistrationStepStatus.inProgress}
+            onStepClick={() => setRegistrationStep(RegistrationStepText.AccountDetails)}
         />,
         <Step
             text={RegistrationStepText.UserDetails}
             stepNumber={2}
             status={RegistrationStepStatus.invalid}
+            onStepClick={() => setRegistrationStep(RegistrationStepText.UserDetails)}
         />,
         <Step
             text={RegistrationStepText.ContactDetails}
             stepNumber={3}
             status={RegistrationStepStatus.valid}
+            onStepClick={() => setRegistrationStep(RegistrationStepText.ContactDetails)}
         />,
     ];
+
+    const registerContent = useCallback(() => {
+        switch (registrationStep) {
+            case RegistrationStepText.AccountDetails:
+                return <AccountDetails />;
+            case RegistrationStepText.UserDetails:
+                return <UserDetails />;
+            case RegistrationStepText.ContactDetails:
+                return <ContactDetails />;
+            default:
+                return <AccountDetails />;
+        }
+    }, [registrationStep]);
 
     return (
         <div className="w-full lg:w-2/3 bg-white mx-auto rounded-2xl flex-col justify-center items-center h-full shadow-2xl">
@@ -30,7 +51,8 @@ const Register = () => {
                 <h1 className="font-extrabold text-3xl">Register</h1>
             </div>
             <Stepper steps={stepComponents} />
-            <Input
+            {registerContent()}
+            {/* <Input
                 label="Username"
                 type={InputType.text}
                 name="username"
@@ -70,7 +92,7 @@ const Register = () => {
                 value="Female"
                 rules={[Rule.required()]}
             />
-            <Input label="Some long checkbox label" type={InputType.checkbox} name="gender" id="gender2" value="Female" rules={[]} />
+            <Input label="Some long checkbox label" type={InputType.checkbox} name="gender" id="gender2" value="Female" rules={[]} /> */}
         </div>
     );
 };

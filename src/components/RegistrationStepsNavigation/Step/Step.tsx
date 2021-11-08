@@ -11,7 +11,8 @@ export enum RegistrationStepStatus {
 export interface IProps {
     text: string,
     stepNumber: number,
-    status: RegistrationStepStatus
+    status: RegistrationStepStatus,
+    onStepClick: () => void,
 }
 
 /**
@@ -62,6 +63,7 @@ const Step: React.FC<IProps> = ({
     status,
     stepNumber,
     text,
+    onStepClick,
 }) => {
     const backgroundCssColor = getBackgroundCssColor(status);
     const textCssColor = status === RegistrationStepStatus.disabled ? "text-gray-300" : "text-gray-900";
@@ -69,7 +71,7 @@ const Step: React.FC<IProps> = ({
     const badge = getStepBadgeComponent(status);
 
     return (
-        <div className="flex-col justify-center items-center w-24" key={status}>
+        <div className="flex-col justify-center items-center w-24" key={status} data-testid={`step-${text}`} onClick={onStepClick}>
             <div
                 className={`rounded-full flex items-center justify-center h-12 w-12 font-bold text-xl mx-auto relative ${backgroundCssColor} ${stepNumberCssColor}`}
             >
