@@ -1,4 +1,4 @@
-import { noSpecialCharacterRegex, onlyLettersRegex, Rule } from "@src/utils/Input/Rule";
+import { firstNameLastNameRegex, noSpecialCharacterRegex, Rule } from "@src/utils/Input/Rule";
 import { expect } from "@jest/globals";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
@@ -104,36 +104,20 @@ describe("InputRulesUtils", () => {
         expect(ruleWithMessage.forbiddenValues).toEqual(forbiddenValues);
     });
 
-    it("noSpecialChars rule should return correct object structure and values", () => {
-        const rule = Rule.noSpecialChars();
+    it("regexExp rule should return correct object structure and values", () => {
+        const rule = Rule.regexExp(noSpecialCharacterRegex);
 
         expect(rule).toHaveProperty("name");
         expect(rule).toHaveProperty("message");
-        expect(rule).toHaveProperty("charactersAllowedRegex");
-        expect(rule.name).toEqual(InputRule.noSpecialChars);
+        expect(rule).toHaveProperty("regex");
+        expect(rule.name).toEqual(InputRule.regexExp);
         expect(rule.message).toEqual(undefined);
-        expect(rule.charactersAllowedRegex).toEqual(noSpecialCharacterRegex);
+        expect(rule.regex).toEqual(noSpecialCharacterRegex);
 
-        const ruleWithMessage = Rule.noSpecialChars(testMessage);
-        expect(ruleWithMessage.name).toEqual(InputRule.noSpecialChars);
+        const ruleWithMessage = Rule.regexExp(noSpecialCharacterRegex, testMessage);
+        expect(ruleWithMessage.name).toEqual(InputRule.regexExp);
         expect(ruleWithMessage.message).toEqual(testMessage);
-        expect(ruleWithMessage.charactersAllowedRegex).toEqual(noSpecialCharacterRegex);
-    });
-
-    it("onlyLetters rule should return correct object structure and values", () => {
-        const rule = Rule.onlyLetters();
-
-        expect(rule).toHaveProperty("name");
-        expect(rule).toHaveProperty("message");
-        expect(rule).toHaveProperty("onlyLettersRegex");
-        expect(rule.name).toEqual(InputRule.onlyLetters);
-        expect(rule.message).toEqual(undefined);
-        expect(rule.onlyLettersAllowedRegex).toEqual(onlyLettersRegex);
-
-        const ruleWithMessage = Rule.onlyLetters(testMessage);
-        expect(ruleWithMessage.name).toEqual(InputRule.onlyLetters);
-        expect(ruleWithMessage.message).toEqual(testMessage);
-        expect(ruleWithMessage.onlyLettersAllowedRegex).toEqual(onlyLettersRegex);
+        expect(ruleWithMessage.regex).toEqual(noSpecialCharacterRegex);
     });
 
     it("noNchars rule should return correct object structure and values", () => {
@@ -222,15 +206,27 @@ describe("InputRulesUtils", () => {
         });
 
         it.each([
-            ["", true],
-            ["a", true],
-            ["@someValue", false],
-            ["$-someOtherValue", false],
-            ["@!%$@#5", false],
-            ["Some value with spaces", false],
-            ["PasswordWithoutSpaces", true],
-        ])("noSpecialChars validator should return correct value", (inputValue, expectedResult) => {
-            expect(Rule.noSpecialChars().isValid(inputValue)).toEqual(expectedResult);
+            ["", noSpecialCharacterRegex, true],
+            ["a", noSpecialCharacterRegex, true],
+            ["@someValue", noSpecialCharacterRegex, false],
+            ["$-someOtherValue", noSpecialCharacterRegex, false],
+            ["@!%$@#5", noSpecialCharacterRegex, false],
+            ["Some value with spaces", noSpecialCharacterRegex, false],
+            ["PasswordWithoutSpaces", noSpecialCharacterRegex, true],
+            ["", firstNameLastNameRegex, true],
+            [" ", firstNameLastNameRegex, true],
+            ["a", firstNameLastNameRegex, true],
+            ["@someValue", firstNameLastNameRegex, false],
+            ["$-someOtherValue", firstNameLastNameRegex, false],
+            ["$&%^-someOtherValue", firstNameLastNameRegex, false],
+            ["22123", firstNameLastNameRegex, false],
+            ["Some value with spaces", firstNameLastNameRegex, true],
+            ["Valid First Name", firstNameLastNameRegex, true],
+            ["Stoyan-Kalinov", firstNameLastNameRegex, true],
+            ["Stoyan't-Kalinov", firstNameLastNameRegex, true],
+            ["Stoyan't-Kalinov Asd", firstNameLastNameRegex, true],
+        ])("regexExp validator should return correct value depending on the regex passed", (inputValue, regex: RegExp, expectedResult) => {
+            expect(Rule.regexExp(regex).isValid(inputValue)).toEqual(expectedResult);
         });
     });
 });
