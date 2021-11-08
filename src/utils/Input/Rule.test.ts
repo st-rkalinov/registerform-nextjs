@@ -1,4 +1,4 @@
-import { charactersAllowedRegex, onlyLettersRegex, Rule, } from "@src/utils/Input/Rule";
+import { charactersAllowedRegex, onlyLettersRegex, Rule } from "@src/utils/Input/Rule";
 import { expect } from "@jest/globals";
 import { InputRule } from "@src/interfaces/InputRuleInteface";
 
@@ -190,6 +190,24 @@ describe("InputRulesUtils", () => {
 
         it("max validator should throw error if inputValue cannot be a number", () => {
             expect(() => Rule.max(10).isValid("asd")).toThrow("The value entered is not a number");
+        });
+
+        it.each([
+            ["", 5, false],
+            ["1", 5, false],
+            ["12345", 5, true],
+            ["123456", 5, true],
+        ])("minLen validator should return correct value", (inputValue, minValue, expectedResult) => {
+            expect(Rule.minLen(minValue).isValid(inputValue)).toEqual(expectedResult);
+        });
+
+        it.each([
+            ["", 7, true],
+            ["1", 7, true],
+            ["1234567", 7, true],
+            ["12345678", 7, false],
+        ])("maxLen validator should return correct value", (inputValue, minValue, expectedResult) => {
+            expect(Rule.maxLen(minValue).isValid(inputValue)).toEqual(expectedResult);
         });
     });
 });
