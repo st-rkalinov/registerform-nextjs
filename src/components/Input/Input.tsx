@@ -12,12 +12,13 @@ export enum InputType {
 }
 
 interface IProps {
-    label: string,
     type: InputType,
+    placeholder: string,
     name: string,
     id: string,
     value: string,
     rules: (IInputRule & IValidatable)[],
+    label?: string,
 }
 
 const Input: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ const Input: React.FC<IProps> = ({
     name,
     id,
     value,
+    placeholder,
     rules,
 }) => {
     const [inputValue, setInputValue] = useState<string>(value || "");
@@ -34,12 +36,13 @@ const Input: React.FC<IProps> = ({
 
     return (
         <div data-testid="input-container">
-            <label htmlFor={id}>{label}</label>
+            { label ? <label htmlFor={id}>{label}</label> : null }
             <input
                 type={type}
                 name={name}
                 id={id}
                 value={inputValue}
+                placeholder={placeholder}
                 onChange={(e) => {
                     if (!isTouched) {
                         setIsTouched(true);
@@ -55,6 +58,10 @@ const Input: React.FC<IProps> = ({
             { errors.map((err) => (<span key={err.toString()}>{ err }</span>)) }
         </div>
     );
+};
+
+Input.defaultProps = {
+    label: undefined,
 };
 
 export default Input;
