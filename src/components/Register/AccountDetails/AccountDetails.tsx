@@ -9,6 +9,7 @@ import {
     Rule
 } from "@src/features/Input/Rule";
 import InputCheckbox from "@src/components/Input/InputCheckbox/InputCheckbox";
+import InputRadio from "@src/components/Input/InputRadio/InputRadio";
 
 const AccountDetails = () => (
     <section className="p-3 flex-col justify-center">
@@ -61,6 +62,7 @@ const AccountDetails = () => (
             <h4 className="font-bold text-gray-900 text-xl">Marketing Preferences</h4>
         </div>
         <InputCheckbox name="showFirstName" id="showFirstName" value="showFirstName" rules={[]} label="I am happy for my first name to be show on the side if I win" />
+        <InputRadio name="radioButton" id="radioButton" value="radioButton" rules={[]} label="I am happy for my first name to be show on the side if I win" />
     </section>
 );
 

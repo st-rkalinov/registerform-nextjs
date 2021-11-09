@@ -71,8 +71,7 @@ describe("Input component", () => {
         [InputType.email, "email placehodler", ""],
         [InputType.text, "text placehodler", ""],
         [InputType.password, "password placehodler", ""],
-        /*[InputType.radio, "radio label", "checked value"],
-        [InputType.checkbox, "checkbox label", "checked value"],*/
+        /*[InputType.radio, "radio label", "checked value"],*/
     ])("should update input value AND/OR checked property correctly after user interaction", (inputType, placeholderText, value) => {
         render(<Input
             type={inputType}
