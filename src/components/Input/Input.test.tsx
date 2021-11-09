@@ -43,13 +43,10 @@ describe("Input component", () => {
         expect(inputComponent).toBeInTheDocument();
     });
 
-    //TODO: Fix bellow test for checkbox and radio
     it.each([
         [InputType.email, "email placeholder", InputType.email],
         [InputType.text, "text placeholder", InputType.text],
         [InputType.password, "password placeholder", InputType.password],
-        /*[InputType.checkbox, "checkbox label", InputType.checkbox],
-        [InputType.radio, "radio label", InputType.radio],*/
     ])("should render the correct type of input depending on the passed props (input type: %s) ", (inputType, placeholderText, expectedType) => {
         render(<Input
             type={inputType}
@@ -66,12 +63,10 @@ describe("Input component", () => {
         expect(inputComponent.getAttribute("type")).toEqual(expectedType);
     });
 
-    //TODO: fix below test for checkbox and radio
     it.each([
-        [InputType.email, "email placehodler", ""],
-        [InputType.text, "text placehodler", ""],
-        [InputType.password, "password placehodler", ""],
-        /*[InputType.radio, "radio label", "checked value"],*/
+        [InputType.email, "email placeholder", ""],
+        [InputType.text, "text placeholder", ""],
+        [InputType.password, "password placeholder", ""],
     ])("should update input value AND/OR checked property correctly after user interaction", (inputType, placeholderText, value) => {
         render(<Input
             type={inputType}
@@ -91,41 +86,6 @@ describe("Input component", () => {
         userEvent.clear(inputComponent);
         expect(inputComponent).toHaveValue("");
     });
-
-    //TODO: refactor code below
-    /*it("only one radio button from a group should be checked at a time", () => {
-        render(
-            <>
-                <Input
-                    type={InputType.radio}
-                    label="radio1"
-                    id="radio1id"
-                    name="radioGroup"
-                    value="radio1Value"
-                    rules={[Rule.required()]}
-                />
-                <Input
-                    type={InputType.radio}
-                    label="radio2"
-                    id="radio2id"
-                    name="radioGroup"
-                    value="radio2Value"
-                    rules={[Rule.required()]}
-                />
-            </>,
-        );
-
-        const radioOneElement: HTMLInputElement = screen.getByLabelText("radio1");
-        const radioTwoElement: HTMLInputElement = screen.getByLabelText("radio2");
-
-        userEvent.click(radioOneElement);
-        expect(radioOneElement).toBeChecked();
-        expect(radioTwoElement).not.toBeChecked();
-
-        userEvent.click(radioTwoElement);
-        expect(radioOneElement).not.toBeChecked();
-        expect(radioTwoElement).toBeChecked();
-    });*/
 
     it("should show 'required' error under the input onFocusOut if the input is empty AND its touched", () => {
         render(<Input

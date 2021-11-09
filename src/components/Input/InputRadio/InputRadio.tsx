@@ -28,8 +28,9 @@ const InputRadio: React.FC<IProps> = ({
                 id={id}
                 value={value}
                 checked={isChecked}
-                onChange={() => {
+                onChange={(e) => {
                     setIsChecked(!isChecked);
+                    checkForErrors(e.target);
                 }}
                 className="w-full rounded-md border-solid border-4 border-gray-300 focus:border-gray-500 hover:border-gray-400 outline-none p-3 placeholder-gray-500 font-bold"
             />
