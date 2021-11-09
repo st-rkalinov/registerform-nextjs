@@ -13,7 +13,7 @@ describe("Input component", () => {
         expect(checkbox).toBeInTheDocument();
     });
 
-     it("should update checked value on click event", () => {
+    it("should update checked value on click event", () => {
         render(<InputCheckbox
             label="TEST_LABEL"
             id="TEST_ID"
@@ -31,7 +31,7 @@ describe("Input component", () => {
         expect(inputComponent).not.toBeChecked();
     });
 
-     it("should show error under the checkbox if it is required", () => {
+    it("should show error under the checkbox if it is required", () => {
         render(<InputCheckbox
             label="TEST_LABEL"
             id="TEST_ID"

@@ -61,9 +61,10 @@ const AccountDetails = () => (
         <div className="flex justify-between items-center p-3">
             <h4 className="font-bold text-gray-900 text-xl">Marketing Preferences</h4>
         </div>
-        <InputCheckbox name="showFirstName" id="showFirstName" value="showFirstName" rules={[Rule.required()]} label="I am happy for my first name to be show on the side if I win" />
-        <InputRadio name="radioButton" id="radioButton" value="radioButton" rules={[Rule.required()]} label="Radio label 1" />
-        <InputRadio name="radioButton" id="radioButton2" value="radioButton2" rules={[Rule.required()]} label="Radio label 2" />
+        <InputCheckbox name="showFirstName" id="showFirstName" value="showFirstName" rules={[]} label="I am happy for my first name to be show on the side if I win (Optional)" />
+        <InputCheckbox name="emailAboutPromotions" id="emailAboutPromotions" value="emailAboutPromotions" rules={[]} label="Email me about promotions, large jackpots and results (Optional)" />
+        <InputRadio name="radioButton" id="radioButton" value="radioButton" rules={[]} label="Radio label 1" />
+        <InputRadio name="radioButton" id="radioButton2" value="radioButton2" rules={[]} label="Radio label 2" />
     </section>
 );
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useValidation from "@src/hooks/useValidation/useValidation";
 import { IInputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
+import CheckBoxSvg from "@src/components/icons/checkboxSvg/CheckBoxSvg";
 
 interface IProps {
     name: string,
@@ -21,7 +22,7 @@ const InputCheckbox: React.FC<IProps> = ({
     const { errors, checkForErrors } = useValidation(rules);
 
     return (
-        <div data-testid="input-container" className="p-3">
+        <div data-testid="input-container" className="p-3 flex items-start relative">
             <input
                 type="checkbox"
                 name={name}
@@ -32,8 +33,13 @@ const InputCheckbox: React.FC<IProps> = ({
                     setIsChecked(!isChecked);
                     checkForErrors(e.target);
                 }}
-                className="w-full rounded-md border-solid border-4 border-gray-300 focus:border-gray-500 hover:border-gray-400 outline-none p-3 placeholder-gray-500 font-bold"
+                className="opacity-0 absolute h-8 w-8 mdo-checkbox"
             />
+            <div
+                className="mdo-customCheckbox"
+            >
+                <CheckBoxSvg />
+            </div>
             <label htmlFor={id}>{label}</label>
             { errors.map((err) => (<span key={err.toString()}>{ err }</span>)) }
         </div>

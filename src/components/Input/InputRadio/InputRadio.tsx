@@ -22,19 +22,21 @@ const InputRadio: React.FC<IProps> = ({
 
     return (
         <div data-testid="input-container" className="p-3">
-            <input
-                type="radio"
-                name={name}
-                id={id}
-                value={value}
-                checked={isChecked}
-                onChange={(e) => {
-                    setIsChecked(!isChecked);
-                    checkForErrors(e.target);
-                }}
-                className="w-full rounded-md border-solid border-4 border-gray-300 focus:border-gray-500 hover:border-gray-400 outline-none p-3 placeholder-gray-500 font-bold"
-            />
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                <input
+                    type="radio"
+                    name={name}
+                    id={id}
+                    value={value}
+                    checked={isChecked}
+                    onChange={(e) => {
+                        setIsChecked(!isChecked);
+                        checkForErrors(e.target);
+                    }}
+                    className="w-full rounded-md border-solid border-4 border-gray-300 focus:border-gray-500 hover:border-gray-400 outline-none p-3 placeholder-gray-500 font-bold"
+                />
+                {label}
+            </label>
             { errors.map((err) => (<span key={err.toString()}>{ err }</span>)) }
         </div>
     );
