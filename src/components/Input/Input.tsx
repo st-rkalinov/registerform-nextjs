@@ -35,7 +35,7 @@ const Input: React.FC<IProps> = ({
     const { errors, checkForErrors } = useValidation(rules);
 
     return (
-        <div data-testid="input-container">
+        <div data-testid="input-container" className="p-3">
             { label ? <label htmlFor={id}>{label}</label> : null }
             <input
                 type={type}
@@ -54,6 +54,7 @@ const Input: React.FC<IProps> = ({
                         checkForErrors(e.target.value);
                     }
                 }}
+                className="w-full rounded-md border-solid border-4 border-gray-300 focus:border-gray-500 hover:border-gray-400 outline-none p-3 placeholder-gray-500 font-bold"
             />
             { errors.map((err) => (<span key={err.toString()}>{ err }</span>)) }
         </div>

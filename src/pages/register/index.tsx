@@ -48,7 +48,7 @@ const Register = () => {
             <div className="flex justify-around items-center p-9">
                 <h1 className="font-extrabold text-3xl">Register</h1>
             </div>
-            <div className="flex-col w-1/2 justify-center mx-auto">
+            <div className="flex-col w-full sm:w-1/2 2xl:w-1/3 justify-center mx-auto">
                 <Stepper steps={stepComponents} />
                 {registerContent()}
             </div>

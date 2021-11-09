@@ -1,11 +1,14 @@
 import { IInputRule, InputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
+//TODO: add tests for the Regexes
 export const noSpecialCharacterRegex = /^[0-9a-zA-Z]*$/;
 export const noSpecialCharacterPlusSpaceRegex = /^[0-9a-zA-Z\s]*$/;
 export const onlyLettersRegex = /^[a-zA-Z]*$/;
 export const firstNameLastNameRegex = /^[a-zA-Z\s'-]*$/;
 export const moreThanTwoSpacesDashesApostrophes = /([\s\-'])\1{2,}/;
 export const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+export const atLeastOneNumberRegex = /.*[0-9].*/;
+export const atLeastOneLetterRegex = /[A-Za-z]+/;
 
 const basicProps = (
     name: InputRule,

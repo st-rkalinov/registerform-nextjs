@@ -6,7 +6,7 @@ interface IProps {
 
 const Stepper: React.FC<IProps> = ({ steps }) => (
 
-    <div className="flex justify-center items-center">
+    <div className="flex justify-between items-center">
         {steps.map((component, index) => (
             <React.Fragment key={index}>
                 {component}
