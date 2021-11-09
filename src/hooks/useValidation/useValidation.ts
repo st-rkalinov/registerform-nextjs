@@ -3,13 +3,13 @@ import { IInputRule, IValidatable } from "@src/interfaces/InputRuleInteface";
 
 interface IUseValidation {
     errors: string[],
-    checkForErrors: (inputValue: string) => void,
+    checkForErrors: (target: HTMLInputElement) => void,
 }
 
 const useValidation = (rules: (IInputRule & IValidatable)[]): IUseValidation => {
     const [errors, setErrors] = useState<string[]>([]);
 
-    const checkForErrors = (inputValue: string): void => {
+    const checkForErrors = (target: HTMLInputElement): void => {
         const inputErrors: string[] = [];
 
         if (rules.length === 0) {
@@ -17,7 +17,7 @@ const useValidation = (rules: (IInputRule & IValidatable)[]): IUseValidation => 
         }
 
         rules.forEach((rule) => {
-            if (!rule.isValid(inputValue)) {
+            if (!rule.isValid(target)) {
                 inputErrors.push(rule.message || rule.defaultMessage);
             }
         });

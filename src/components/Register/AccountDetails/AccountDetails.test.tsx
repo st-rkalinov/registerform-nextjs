@@ -6,7 +6,7 @@ describe("Account Details", () => {
     it("should render account details component", () => {
         render(<AccountDetails />);
 
-        const header = screen.getByText("Account Details Form");
+        const header = screen.getByPlaceholderText("Email");
         expect(header).toBeInTheDocument();
     });
 });

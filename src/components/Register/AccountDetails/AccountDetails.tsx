@@ -8,6 +8,7 @@ import {
     onlyLettersRegex,
     Rule
 } from "@src/features/Input/Rule";
+import InputCheckbox from "@src/components/Input/InputCheckbox/InputCheckbox";
 
 const AccountDetails = () => (
     <section className="p-3 flex-col justify-center">
@@ -59,6 +60,7 @@ const AccountDetails = () => (
         <div className="flex justify-between items-center p-3">
             <h4 className="font-bold text-gray-900 text-xl">Marketing Preferences</h4>
         </div>
+        <InputCheckbox name="showFirstName" id="showFirstName" value="showFirstName" rules={[]} label="I am happy for my first name to be show on the side if I win" />
     </section>
 );
 

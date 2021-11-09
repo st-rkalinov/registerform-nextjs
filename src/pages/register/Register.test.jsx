@@ -45,8 +45,8 @@ describe("Register Page", () => {
 
         userEvent.click(accountDetailsNavigationComponent);
 
-        const accountDetailsHeader = screen.getByText("Account Details Form");
-        expect(accountDetailsHeader).toBeInTheDocument();
+        const accountDetailsEmailInput = screen.getByPlaceholderText("Email");
+        expect(accountDetailsEmailInput).toBeInTheDocument();
 
         userEvent.click(userDetailsComponent);
 

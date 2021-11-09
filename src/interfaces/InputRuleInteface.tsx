@@ -16,5 +16,5 @@ export interface IInputRule {
 }
 
 export interface IValidatable {
-    isValid: (value: string) => boolean,
+    isValid: (target: HTMLInputElement) => boolean,
 }

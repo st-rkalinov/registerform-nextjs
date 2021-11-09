@@ -1,3 +1,4 @@
+import React from "react";
 import {
     firstNameLastNameRegex,
     moreThanTwoSpacesDashesApostrophes,
@@ -125,11 +126,18 @@ describe("InputRulesUtils", () => {
     });
 
     describe("InputRulesUtils validators", () => {
+        let mockedInput: any;
+
+        beforeEach(() => {
+            mockedInput = () => <input name="test" type="text" value="" />;
+        });
+
         it.each([
             ["", false],
             ["asd", true],
         ])("required validator should return correct value", (inputValue, expectedResult) => {
-            expect(Rule.required().isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.required().isValid(mockedInput)).toEqual(expectedResult);
         });
 
         it.each([
@@ -138,11 +146,13 @@ describe("InputRulesUtils", () => {
             ["4", 4, true],
             ["5", 4, true],
         ])("min validator should return correct value", (inputValue, minValue, expectedResult) => {
-            expect(Rule.min(minValue).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.min(minValue).isValid(mockedInput)).toEqual(expectedResult);
         });
 
         it("min validator should throw error if inputValue cannot be a number", () => {
-            expect(() => Rule.min(5).isValid("asd")).toThrow("The value entered is not a number");
+            mockedInput.value = "asd";
+            expect(() => Rule.min(5).isValid(mockedInput)).toThrow("The value entered is not a number");
         });
 
         it.each([
@@ -151,11 +161,13 @@ describe("InputRulesUtils", () => {
             ["10", 10, true],
             ["5", 10, true],
         ])("max validator should return correct value", (inputValue, maxValue, expectedResult) => {
-            expect(Rule.max(maxValue).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.max(maxValue).isValid(mockedInput)).toEqual(expectedResult);
         });
 
         it("max validator should throw error if inputValue cannot be a number", () => {
-            expect(() => Rule.max(10).isValid("asd")).toThrow("The value entered is not a number");
+            mockedInput.value = "asd";
+            expect(() => Rule.max(10).isValid(mockedInput)).toThrow("The value entered is not a number");
         });
 
         it.each([
@@ -164,7 +176,8 @@ describe("InputRulesUtils", () => {
             ["12345", 5, true],
             ["123456", 5, true],
         ])("minLen validator should return correct value", (inputValue, minValue, expectedResult) => {
-            expect(Rule.minLen(minValue).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.minLen(minValue).isValid(mockedInput)).toEqual(expectedResult);
         });
 
         it.each([
@@ -173,7 +186,8 @@ describe("InputRulesUtils", () => {
             ["1234567", 7, true],
             ["12345678", 7, false],
         ])("maxLen validator should return correct value", (inputValue, minValue, expectedResult) => {
-            expect(Rule.maxLen(minValue).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.maxLen(minValue).isValid(mockedInput)).toEqual(expectedResult);
         });
 
         it.each([
@@ -184,7 +198,8 @@ describe("InputRulesUtils", () => {
             ["SomeLastName Asd", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], false],
             ["Some valid value", ["SomeFirstName", "stoyan@gmail.com", "SomeLastName"], true],
         ])("forbiddenValues validator should return correct value", (inputValue, forbiddenValues, expectedResult) => {
-            expect(Rule.forbiddenValues(forbiddenValues).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.forbiddenValues(forbiddenValues).isValid(mockedInput)).toEqual(expectedResult);
         });
 
         //TODO: to make correct implementation
@@ -230,7 +245,8 @@ describe("InputRulesUtils", () => {
             ["Stoyan't---Kalinov's", moreThanTwoSpacesDashesApostrophes, true],
             ["Stoyan Kalinov", moreThanTwoSpacesDashesApostrophes, false],
         ])("regexExp validator should return correct value depending on the regex passed", (inputValue, regex: RegExp, expectedResult) => {
-            expect(Rule.regexExp(regex).isValid(inputValue)).toEqual(expectedResult);
+            mockedInput.value = inputValue;
+            expect(Rule.regexExp(regex).isValid(mockedInput)).toEqual(expectedResult);
         });
     });
 });
